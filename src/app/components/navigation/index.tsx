@@ -2,7 +2,7 @@
 
 import { BtnList } from "@/app/data";
 import React from "react";
-import NavButton from "./NavButton";
+import NavButton from "../buttons/nav.button";
 
 const Navigation = () => {
   const angle = 360 / BtnList.length;
