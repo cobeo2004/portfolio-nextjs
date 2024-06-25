@@ -19,3 +19,4 @@ export type TCoordinateStyle = {
 };
 
 export type TNavButtonProps = TCoordinateStyle & TBtnList;
+
