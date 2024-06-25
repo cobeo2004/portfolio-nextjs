@@ -20,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={clsx(inter.variable, "bg-background text-foreground")}>
         {children}
-        <FireFlyBackground />
+        <div className="z-0">
+          <FireFlyBackground />
+        </div>
       </body>
     </html>
   );
