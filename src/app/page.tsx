@@ -13,7 +13,7 @@ export default function Home() {
           src={background}
           alt="Background-image"
           fill
-          className="w-full h-full object-cover object-center opacity-100"
+          className="w-full h-full object-cover object-center opacity-25"
         />
       </div>
       <div className="w-full h-screen z-10">
