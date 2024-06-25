@@ -19,4 +19,14 @@ export type TCoordinateStyle = {
 };
 
 export type TNavButtonProps = TCoordinateStyle & TBtnList;
-
+export type TFormValue = {
+    name: string;
+    email: string;
+    message: string;
+}
+export type TTemplateParams = {
+    to_name: string;
+    from_name: string;
+    reply_to: string;
+    message: string;
+}

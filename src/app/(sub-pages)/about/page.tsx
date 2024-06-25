@@ -8,7 +8,7 @@ import { StaffModel } from "../../components/models/staff.model";
 import { HatModel } from "@/app/components/models/hat.model";
 import AboutDetails from "@/app/components/About";
 
-export default function Home() {
+export default function About() {
   return (
     <>
       <Image
