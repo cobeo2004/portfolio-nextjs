@@ -2,6 +2,7 @@ import {
   Github,
   HomeIcon,
   House,
+  Instagram,
   Linkedin,
   NotebookIcon,
   Palette,
@@ -21,8 +22,8 @@ export default function getIcon(icon: string) {
       return <Phone strokeWidth={1.5} className="w-auto h-auto" />;
     case "github":
       return <Github strokeWidth={1.5} className="w-auto h-auto" />;
-    case "twitter":
-      return <Twitter strokeWidth={1.5} className="w-auto h-auto" />;
+    case "instagram":
+      return <Instagram strokeWidth={1.5} className="w-auto h-auto" />;
     case "linkedin":
       return <Linkedin strokeWidth={1.5} className="w-auto h-auto" />;
     case "resume":

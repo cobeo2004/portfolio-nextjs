@@ -1,21 +1,32 @@
+"use client";
 import { TProjectList } from "@/app/types";
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
+const item: Variants = {
+  hidden: { opacity: 0, y: 100 },
+  show: { opacity: 1, y: 0 },
+};
+
+const NavLink = motion(Link);
 const ProjectLayout = ({ name, description, date, demoLink }: TProjectList) => {
   return (
-    <Link
+    <NavLink
+      variants={item}
       href={demoLink}
       target={"_blank"}
-      className="flex cursor-pointer items-center justify-between w-full relative rounded-lg overflow-hidden p-6 custom-background"
+      className="text-sm md:text-base flex cursor-pointer items-center justify-between w-full relative rounded-lg overflow-hidden p-4 md:p-6 custom-background"
     >
       <div className="flex items-center justify-center space-x-2">
         <h2 className="text-foreground">{name}</h2>
-        <p className="text-muted">{description}</p>
+        <p className="text-foreground lg:text-muted hidden sm:inline-block">
+          {description}
+        </p>
       </div>
       <div className="flex-1 mx-2 mb-2 bg-transparent border-b border-dashed border-muted self-end" />
       <p className="text-foreground">{new Date(date).toDateString()}</p>
-    </Link>
+    </NavLink>
   );
 };
 

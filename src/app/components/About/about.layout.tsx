@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import React from "react";
 
 const AboutLayout = ({
@@ -9,14 +10,18 @@ const AboutLayout = ({
   className?: string;
 }) => {
   return (
-    <div
+    <motion.div
+      initial={{ scale: 0 }}
+      whileInView={{ scale: 1 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
       className={clsx(
-        "p-16 rounded-xl flex justify-center items-center custom-background space-y-4",
+        "p-6 sm:p-8 rounded-xl flex justify-center items-center custom-background space-y-8",
         className
       )}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
