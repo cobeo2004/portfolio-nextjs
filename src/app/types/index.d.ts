@@ -3,6 +3,7 @@ export type TBtnList = {
     link: string;
     icon: string;
     newTab: boolean;
+    labelDirection?: "left" | "right"
 };
 
 export type TProjectList = {
@@ -14,8 +15,8 @@ export type TProjectList = {
 };
 
 export type TCoordinateStyle = {
-    x: string;
-    y: string;
+    x: number | string;
+    y: number | string;
 };
 
 export type TNavButtonProps = TCoordinateStyle & TBtnList;
