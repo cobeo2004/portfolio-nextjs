@@ -3,20 +3,20 @@ import { TFormValue, TTemplateParams } from "@/app/types"
 import { FieldValues, useForm } from "react-hook-form"
 import { toast } from "sonner";
 
-export const useFormEmailSubmit = <TFieldValues extends FieldValues = FieldValues, TEmailParam extends TTemplateParams = TTemplateParams, TContext = any, TTransformedValues extends FieldValues | undefined = undefined>() => {
-    const res = useForm<TFormValue>();
-    const onSubmit = (data: TFormValue) => {
+export const useFormEmailSubmit = <TFieldValues extends FieldValues = FieldValues, TContext = any, TTransformedValues extends FieldValues | undefined = undefined>() => {
+    const res = useForm<TFieldValues>();
+    const onSubmit = (data: TFieldValues) => {
         const templateParams: TTemplateParams = {
             to_name: "Simon Nguyen",
-            from_name: data.name,
-            reply_to: data.email,
-            message: data.message
+            from_name: data.name as string,
+            reply_to: data.email as string,
+            message: data.message as string
         }
         sendEmail(templateParams);
     }
     const sendEmail = async (params: TTemplateParams) => {
         const toastId = toast.loading("Sending your cast, please wait...");
-        const res = emailjs
+        const res = await emailjs
             .send(
                 process.env.NEXT_PUBLIC_SERVICE_ID as string,
                 process.env.NEXT_PUBLIC_TEMPLATE_ID as string,
