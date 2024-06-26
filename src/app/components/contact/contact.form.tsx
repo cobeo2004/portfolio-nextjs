@@ -16,12 +16,12 @@ export default function ContactForm() {
       <Toaster richColors={true} />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-lg w-full flex flex-col items-center justify-center space-y-4"
+        className="max-w-md w-full flex flex-col items-center justify-center space-y-4"
       >
         <input
           type="text"
           placeholder="Name"
-          className="w-[600px] p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-background"
+          className="w-full md:w-[600px] p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-background"
           {...register("name", {
             required: "This field is required!",
             minLength: {
@@ -38,7 +38,7 @@ export default function ContactForm() {
         <input
           type="email"
           placeholder="Email"
-          className="w-[600px] p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-background"
+          className="w-full md:w-[600px] p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-background"
           {...register("email", { required: "This field is required!" })}
         />
         {errors.email && (
@@ -59,7 +59,7 @@ export default function ContactForm() {
               message: "Message could not be shorter than 50 words!",
             },
           })}
-          className="w-[600px] p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-background"
+          className="w-full md:w-[600px] p-2 rounded-md shadow-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 custom-background"
         />
         {errors.message && (
           <span className="inline-block self-start text-accent">

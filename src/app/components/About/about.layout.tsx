@@ -11,7 +11,7 @@ const AboutLayout = ({
   return (
     <div
       className={clsx(
-        "p-16 rounded-xl flex justify-center items-center custom-background space-y-4",
+        "p-6 sm:p-8 rounded-xl flex justify-center items-center custom-background space-y-8",
         className
       )}
     >
