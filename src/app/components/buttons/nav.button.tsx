@@ -7,7 +7,13 @@ import React from "react";
 import getIcon from "../icons";
 import ComponentDidResponsive from "@/app/ComponentDidResponsive";
 import clsx from "clsx";
+import { motion, Variants } from "framer-motion";
 
+const itemContainer: Variants = {
+  hidden: { scale: 0 },
+  show: { scale: 1 },
+};
+const NavLink = motion(Link);
 const NavButton = ({
   x,
   y,
@@ -25,7 +31,8 @@ const NavButton = ({
             className="absolute cursor-pointer"
             style={{ transform: `translate(${x}, ${y})` }}
           >
-            <Link
+            <NavLink
+              variants={itemContainer}
               aria-label={label}
               target={newTab ? "_blank" : "_self"}
               href={link}
@@ -38,12 +45,13 @@ const NavButton = ({
                   {label}
                 </span>
               </span>
-            </Link>
+            </NavLink>
           </div>
         ) : (
           <>
             <div className="w-fit cursor-pointer">
-              <Link
+              <NavLink
+                variants={itemContainer}
                 aria-label={label}
                 target={newTab ? "_blank" : "_self"}
                 href={link}
@@ -61,7 +69,7 @@ const NavButton = ({
                     {label}
                   </span>
                 </span>
-              </Link>
+              </NavLink>
             </div>
           </>
         );
