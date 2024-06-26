@@ -1,10 +1,7 @@
 "use client";
 import Image from "next/image";
 import background from "../../../../public/assets/background/about-background.png";
-import ProjectList from "../../components/ProjectList";
-import { projectsData } from "../../data";
 import RenderModel from "../../components/models/RenderModel";
-import { StaffModel } from "../../components/models/staff.model";
 import { HatModel } from "@/app/components/models/hat.model";
 import AboutDetails from "@/app/components/About";
 

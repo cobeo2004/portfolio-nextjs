@@ -1,10 +1,16 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import getIcon from "../icons";
+import { motion } from "framer-motion";
 
+const NavLink = motion(Link);
 const HomeButton = () => {
   return (
-    <Link
+    <NavLink
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ delay: 1 }}
       aria-label={"home"}
       target="_self"
       href="/"
@@ -17,7 +23,7 @@ const HomeButton = () => {
           Home
         </span>
       </span>
-    </Link>
+    </NavLink>
   );
 };
 
