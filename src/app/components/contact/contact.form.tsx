@@ -1,13 +1,10 @@
 "use client";
-
-import { TFormValue, TTemplateParams } from "@/app/types";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { toast, Toaster } from "sonner";
-import emailjs from "@emailjs/browser";
+import { Toaster } from "sonner";
 import { useFormEmailSubmit } from "../hooks/useFormEmailSubmit";
+import { TFormValue } from "@/app/types";
 export default function ContactForm() {
-  const { res, onSubmit } = useFormEmailSubmit();
+  const { res, onSubmit } = useFormEmailSubmit<TFormValue>();
   const {
     register,
     handleSubmit,
