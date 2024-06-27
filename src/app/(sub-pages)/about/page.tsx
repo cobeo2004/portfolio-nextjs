@@ -14,6 +14,9 @@ const HatModel = dynamic(
 export default function About() {
   return (
     <>
+      <header>
+        <title>About</title>
+      </header>
       <Image
         src={background}
         priority

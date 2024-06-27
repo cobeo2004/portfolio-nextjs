@@ -17,6 +17,9 @@ const StaffModel = dynamic(
 export default function Home() {
   return (
     <>
+      <header>
+        <title>Projects</title>
+      </header>
       <Image
         src={background}
         priority

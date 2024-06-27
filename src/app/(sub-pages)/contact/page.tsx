@@ -6,6 +6,9 @@ import ContactForm from "@/app/components/contact/contact.form";
 export default function Contact() {
   return (
     <>
+      <header>
+        <title>Contact Me</title>
+      </header>
       <Image
         src={background}
         priority
