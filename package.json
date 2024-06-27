@@ -13,6 +13,11 @@
     "@emailjs/browser": "^4.3.3",
     "@react-three/drei": "^9.107.0",
     "@react-three/fiber": "^8.16.8",
+    "@trpc/client": "^10.45.2",
+    "@trpc/next": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.11",
     "lucide-react": "^0.396.0",
@@ -20,9 +25,11 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
+    "react-query": "^3.39.3",
     "sharp": "^0.33.4",
     "sonner": "^1.5.0",
-    "three": "^0.165.0"
+    "three": "^0.165.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
