@@ -4,13 +4,23 @@ import background from "../../../../public/assets/background/projects-background
 import ProjectList from "../../components/ProjectList";
 import { projectsData } from "../../data";
 import RenderModel from "../../components/models/RenderModel";
-import { StaffModel } from "../../components/models/staff.model";
+// import { StaffModel } from "../../components/models/staff.model";
+import dynamic from "next/dynamic";
 
+const StaffModel = dynamic(
+  () =>
+    import("../../components/models/staff.model").then((mod) => mod.StaffModel),
+  {
+    ssr: false,
+  }
+);
 export default function Home() {
   return (
     <>
       <Image
         src={background}
+        priority
+        sizes="100vw"
         alt="background-image"
         className="-z-50 fixed top-0 left-0 w-full h-full object-cover object-center opacity-25"
       />

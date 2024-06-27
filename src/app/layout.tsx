@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import FireFlyBackground from "./components/background/FireFlyBackground";
+import Sound from "./components/Sounds/Sound";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -28,6 +29,10 @@ export default function RootLayout({
         <div className="z-0">
           <FireFlyBackground />
         </div>
+        <div className="z-20">
+          <Sound />
+        </div>
+        <div id="my-modal" />
       </body>
     </html>
   );
