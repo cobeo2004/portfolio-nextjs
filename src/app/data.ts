@@ -116,7 +116,7 @@ export const BtnList: TBtnList[] = [
     },
     {
         label: "Resume",
-        link: "/resume.pdf",
+        link: "/assets/pdf/CV.pdf",
         icon: "resume",
         newTab: true,
     },

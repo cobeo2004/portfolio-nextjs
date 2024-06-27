@@ -17,11 +17,6 @@ const WizardModel = dynamic(
 );
 
 export default function Home() {
-  console.log("NEXT_PUBLIC_SERVICE_ID: " + process.env.NEXT_PUBLIC_SERVICE_ID);
-  console.log("NEXT_PUBLIC_KEY: " + process.env.NEXT_PUBLIC_KEY);
-  console.log(
-    "NEXT_PUBLIC_TEMPLATE_ID: " + process.env.NEXT_PUBLIC_TEMPLATE_ID
-  );
   return (
     <>
       <header>
