@@ -1,6 +1,7 @@
-This is a [Next.js](https://nextjs.org/) Personal Portfolio project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [`Next.js`](https://nextjs.org/) Personal Portfolio project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Credit: [CodeBucks](https://www.youtube.com/watch?v=T5t46vuW8fo&t=217s)
+Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website with Next.js, Three.js & Tailwind CSS
+](https://www.youtube.com/watch?v=T5t46vuW8fo&t=217s)
 
 ## Getting Started
 
