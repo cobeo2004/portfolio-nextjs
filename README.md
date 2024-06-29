@@ -23,17 +23,73 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## For Docker Users
 
-To learn more about Next.js, take a look at the following resources:
+**Building from Local**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Simply pull the Github's repository down and run the following command
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+docker build -t <your-prefer-image-name> -f ./Dockerfile .
+```
 
-## Deploy on Vercel
+Once your image has successfully built, run the following command to get started with the project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker run --name portfolio-container -p 3000:3000 portfolio-nextjs
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Or you can go with the `docker-compose.yml` for buiding easier, the `docker-compose.yml` could be implemented as following:
+
+```docker
+#docker-compose.yml
+version: "3.9"
+
+services:
+  nextapp:
+    container_name: nextapp
+    image: nextapp
+    build: .
+    ports:
+      - "3000:3000"
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+**Building from Repository**
+
+To get started, pull the image from the Docker Hub's repository :
+
+```bash
+docker pull cobeo2004/portfolio-nextjs:production
+```
+
+After the image is successfully pulled, run the following command to build the image:
+
+```bash
+docker build -t cobeo2004/portfolio-nextjs:production .
+```
+
+Once the image is built, run the container using the following command:
+
+```bash
+docker run --name <your-preffered-name-for-container> -p 3000:3000 cobeo2004/portfolio-nextjs:production
+```
+
+Or you can go with the `docker-compose.yml` for buiding easier, the `docker-compose.yml` could be implemented as following:
+
+```docker
+#docker-compose.yml
+version: "3.9"
+
+services:
+  portfolio-nextjs:
+    container_name: portfolio-nextjs
+    image: cobeo2004/portfolio-nextjs:production
+    build: production
+    ports:
+      - "3000:3000"
+
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  nextapp:
-    container_name: nextapp
-    image: nextapp
-    build: .
+  portfolio-nextjs:
+    container_name: portfolio-nextjs
+    image: cobeo2004/portfolio-nextjs:production
+    build: production
     ports:
       - "3000:3000"
