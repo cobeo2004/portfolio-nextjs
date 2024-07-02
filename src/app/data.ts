@@ -89,6 +89,13 @@ export const projectsData: TProjectList[] = [
         date: "2024-06-27",
         demoLink: "https://github.com/cobeo2004/portfolio-nextjs",
     },
+    {
+        id: 11,
+        name: "React+JS Document",
+        description: "Easy-to-absorb document for React and JS",
+        date: "2024-07-03",
+        demoLink: "https://github.com/cobeo2004/react-js-doc",
+    },
 ];
 
 export const BtnList: TBtnList[] = [
