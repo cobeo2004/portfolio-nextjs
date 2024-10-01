@@ -2,9 +2,9 @@
 import Image from "next/image";
 import background from "../../public/assets/background/home-background.png";
 import RenderModel from "./components/models/RenderModel";
-// import { WizardModel } from "./components/models/wizard.model";
 import Navigation from "./components/navigation";
 import dynamic from "next/dynamic";
+import YepAssistance from "./components/YepAI/YepAssistance";
 
 const WizardModel = dynamic(
   () =>
@@ -33,9 +33,9 @@ export default function Home() {
             className="w-full h-full object-cover object-center opacity-25"
           />
         </div>
-        <div className="w-full h-screen z-10">
+        <div className="w-full h-screen z-20">
           <Navigation />
-          <RenderModel>
+          <RenderModel className="z-0">
             <WizardModel />
           </RenderModel>
         </div>

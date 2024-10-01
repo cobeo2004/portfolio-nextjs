@@ -4,6 +4,7 @@ import "./globals.css";
 import clsx from "clsx";
 import FireFlyBackground from "./components/background/FireFlyBackground";
 import Sound from "./components/Sounds/Sound";
+import YepAssistance from "./components/YepAI/YepAssistance";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
           "bg-background text-foreground font-inter"
         )}
       >
-        {children}
+        <YepAssistance zIndex={20} />
         <div className="z-0">
           <FireFlyBackground />
         </div>
@@ -33,6 +34,7 @@ export default function RootLayout({
           <Sound />
         </div>
         <div id="my-modal" />
+        {children}
       </body>
     </html>
   );
