@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import AboutLayout from "./about.layout";
+import GithubCalendar from "react-github-calendar";
 
 const AboutDetails = () => {
   return (
@@ -73,11 +74,21 @@ const AboutDetails = () => {
         </AboutLayout>
         <AboutLayout className="col-span-full md:col-span-6 !p-0">
           <img
-            src="https://github-readme-stats.vercel.app/api/pin/?username=cobeo2004&repo=ArgumentedReality&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false&description_lines_count=2"
+            src="https://github-readme-stats.vercel.app/api/pin/?username=cobeo2004&repo=ticket-hunter&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false&description_lines_count=2"
             alt="stats"
             loading="lazy"
             className="w-full h-auto"
           />
+        </AboutLayout>
+        <AboutLayout className="col-span-full !p-0">
+          <div className="w-full h-auto flex justify-center items-center px-2 py-6">
+            <GithubCalendar
+              username="cobeo2004"
+              fontSize={16}
+              blockSize={16}
+              blockMargin={5}
+            />
+          </div>
         </AboutLayout>
       </div>
     </section>
