@@ -16,7 +16,7 @@ Websites:
 
 */
 
-import { TBtnList, TProjectList } from "./types";
+import { TBtnList, TProjectList } from "../types";
 
 export const projectsData: TProjectList[] = [
   {

@@ -1,16 +1,14 @@
 "use client";
 import Image from "next/image";
 import background from "../../public/assets/background/home-background.png";
-import RenderModel from "./components/models/RenderModel";
-import Navigation from "./components/navigation";
+import RenderModel from "../components/models/RenderModel";
+import Navigation from "../components/navigation";
 import dynamic from "next/dynamic";
-import YepAssistance from "./components/YepAI/YepAssistance";
+import YepAssistance from "../components/YepAI/YepAssistance";
 
 const WizardModel = dynamic(
   () =>
-    import("@/app/components/models/wizard.model").then(
-      (mod) => mod.WizardModel
-    ),
+    import("@/components/models/wizard.model").then((mod) => mod.WizardModel),
   {
     ssr: false,
   }

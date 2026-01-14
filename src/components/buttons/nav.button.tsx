@@ -1,11 +1,11 @@
 "use client";
 
-import { TNavButtonProps } from "@/app/types";
+import { TNavButtonProps } from "@/types";
 
 import Link from "next/link";
 import React from "react";
 import getIcon from "../icons";
-import ComponentDidResponsive from "@/app/ComponentDidResponsive";
+import ComponentDidResponsive from "@/components/ComponentDidResponsive";
 import clsx from "clsx";
 import { motion, Variants } from "framer-motion";
 

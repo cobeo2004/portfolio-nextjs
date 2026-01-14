@@ -1,5 +1,5 @@
 import Link from "next/link";
-import HomeButton from "../components/buttons/home.button";
+import HomeButton from "../../components/buttons/home.button";
 
 export default function SubPagesLayout({
   children,

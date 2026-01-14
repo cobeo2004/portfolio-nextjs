@@ -1,10 +1,10 @@
 "use client";
 
-import { BtnList } from "@/app/data";
+import { BtnList } from "@/lib/data";
 import React from "react";
 import NavButton from "../buttons/nav.button";
-import { useScreenSize } from "../hooks/useScreenSize";
-import ComponentDidResponsive from "@/app/ComponentDidResponsive";
+import { useScreenSize } from "../../hooks/useScreenSize";
+import ComponentDidResponsive from "@/components/ComponentDidResponsive";
 import { motion, Variants } from "framer-motion";
 
 const container: Variants = {

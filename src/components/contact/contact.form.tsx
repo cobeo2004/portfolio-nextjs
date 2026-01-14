@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { Toaster } from "sonner";
-import { useFormEmailSubmit } from "../hooks/useFormEmailSubmit";
-import { TFormValue } from "@/app/types";
+import { useFormEmailSubmit } from "../../hooks/useFormEmailSubmit";
+import { TFormValue } from "@/types";
 import { Variants } from "framer-motion";
 import { motion } from "framer-motion";
 const container: Variants = {

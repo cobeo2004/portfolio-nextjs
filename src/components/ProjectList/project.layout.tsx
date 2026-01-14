@@ -1,5 +1,5 @@
 "use client";
-import { TProjectList } from "@/app/types";
+import { TProjectList } from "@/types";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import React from "react";

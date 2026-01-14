@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import background from "../../../../public/assets/background/contact-background.png";
-import ContactForm from "@/app/components/contact/contact.form";
+import ContactForm from "@/components/contact/contact.form";
 
 export default function Contact() {
   return (

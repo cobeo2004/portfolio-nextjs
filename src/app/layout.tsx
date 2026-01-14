@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
-import FireFlyBackground from "./components/background/FireFlyBackground";
-import Sound from "./components/Sounds/Sound";
-import YepAssistance from "./components/YepAI/YepAssistance";
+import FireFlyBackground from "../components/background/FireFlyBackground";
+import Sound from "../components/Sounds/Sound";
+import YepAssistance from "../components/YepAI/YepAssistance";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 

@@ -1,15 +1,17 @@
 "use client";
 import Image from "next/image";
 import background from "../../../../public/assets/background/projects-background.png";
-import ProjectList from "../../components/ProjectList";
-import { projectsData } from "../../data";
-import RenderModel from "../../components/models/RenderModel";
+import ProjectList from "../../../components/ProjectList";
+import { projectsData } from "../../../lib/data";
+import RenderModel from "../../../components/models/RenderModel";
 // import { StaffModel } from "../../components/models/staff.model";
 import dynamic from "next/dynamic";
 
 const StaffModel = dynamic(
   () =>
-    import("../../components/models/staff.model").then((mod) => mod.StaffModel),
+    import("../../../components/models/staff.model").then(
+      (mod) => mod.StaffModel
+    ),
   {
     ssr: false,
   }

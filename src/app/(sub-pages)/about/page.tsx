@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import background from "../../../../public/assets/background/about-background.png";
-import RenderModel from "../../components/models/RenderModel";
-import AboutDetails from "@/app/components/About";
+import RenderModel from "../../../components/models/RenderModel";
+import AboutDetails from "@/components/About";
 import dynamic from "next/dynamic";
 
 const HatModel = dynamic(
-  () => import("../../components/models/hat.model").then((mod) => mod.HatModel),
+  () =>
+    import("../../../components/models/hat.model").then((mod) => mod.HatModel),
   {
     ssr: false,
   }
