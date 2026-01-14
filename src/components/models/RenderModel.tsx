@@ -2,7 +2,7 @@
 import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import clsx from "clsx";
-import React, { Suspense } from "react";
+import { Suspense, type JSX } from "react";
 
 const RenderModel = ({
   children,

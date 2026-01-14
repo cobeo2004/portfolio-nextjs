@@ -4,7 +4,6 @@ import background from "../../public/assets/background/home-background.png";
 import RenderModel from "../components/models/RenderModel";
 import Navigation from "../components/navigation";
 import dynamic from "next/dynamic";
-import YepAssistance from "../components/YepAI/YepAssistance";
 
 const WizardModel = dynamic(
   () =>
