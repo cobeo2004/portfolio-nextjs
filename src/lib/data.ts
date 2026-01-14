@@ -50,7 +50,7 @@ export const BtnList: TBtnList[] = [
   },
   {
     label: "LinkedIn",
-    link: "https://www.linkedin.com/in/xuân-tuấn-minh-nguyễn-7836822b5/",
+    link: "https://www.linkedin.com/in/simon-nguyen-7836822b5/",
     icon: "linkedin",
     newTab: true,
   },
