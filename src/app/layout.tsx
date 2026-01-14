@@ -4,6 +4,7 @@ import "./globals.css";
 import clsx from "clsx";
 import FireFlyBackground from "../components/background/FireFlyBackground";
 import Sound from "../components/Sounds/Sound";
+import QueryProvider from "@/providers/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -32,7 +33,7 @@ export default function RootLayout({
           <Sound />
         </div>
         <div id="my-modal" />
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
