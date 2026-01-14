@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import React from "react";
+import { type JSX } from "react";
 
 const AboutLayout = ({
   children,
