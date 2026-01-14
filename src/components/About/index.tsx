@@ -64,20 +64,12 @@ const AboutDetails = () => {
             className="w-full h-auto"
           />
         </AboutLayout>
-        <AboutLayout className="col-span-full md:col-span-6 !p-0">
+        <AboutLayout className="col-span-full md:col-span-full !p-0">
           <img
-            src="https://streak-stats.demolab.com/?user=cobeo2004"
-            alt="streaks"
-            loading="lazy"
-            className="w-full h-auto"
-          />
-        </AboutLayout>
-        <AboutLayout className="col-span-full md:col-span-6 !p-0">
-          <img
-            src={`${process.env.NEXT_PUBLIC_README_STATS}/api/pin/?username=cobeo2004&repo=ticket-hunter&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false&description_lines_count=2`}
+            src={`${process.env.NEXT_PUBLIC_README_STATS}/api/pin/?username=cobeo2004&repo=budget-buddy&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false&description_lines_count=2`}
             alt="stats"
             loading="lazy"
-            className="w-full h-auto"
+            className="w-full h-[70%]"
           />
         </AboutLayout>
         <AboutLayout className="col-span-full !p-0">
