@@ -14,7 +14,7 @@ const AboutDetails = () => {
               Everything about the wizard!
             </h2>
             <p className="font-light text-xs sm:text-sm md:text-base">
-              Simon, a 20-year-old Vietnamese student, is immersed in the world
+              Simon, a 21-year-old Vietnamese student, is immersed in the world
               of programming and technology. He is currently enrolled at
               Swinburne University of Technology, pursuing a Bachelor's degree
               in Artificial Intelligence and Cybersecurity. Simon's academic
@@ -42,7 +42,7 @@ const AboutDetails = () => {
         </AboutLayout>
         <AboutLayout className="col-span-full sm:col-span-6 md:col-span-4 !p-0">
           <img
-            src="https://github-readme-stats.vercel.app/api/top-langs/?username=cobeo2004&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false"
+            src={`${process.env.NEXT_PUBLIC_README_STATS}/api/top-langs/?username=cobeo2004&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false`}
             alt="most-used-langs"
             loading="lazy"
             className="w-full h-auto"
@@ -50,7 +50,7 @@ const AboutDetails = () => {
         </AboutLayout>
         <AboutLayout className="col-span-full md:col-span-8 !p-0">
           <img
-            src="https://github-readme-stats.vercel.app/api?username=cobeo2004&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false"
+            src={`${process.env.NEXT_PUBLIC_README_STATS}/api?username=cobeo2004&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false`}
             alt="stats"
             loading="lazy"
             className="w-full h-auto"
@@ -66,7 +66,7 @@ const AboutDetails = () => {
         </AboutLayout>
         <AboutLayout className="col-span-full md:col-span-6 !p-0">
           <img
-            src="https://github-readme-streak-stats.herokuapp.com?user=cobeo2004&theme=dark&hide_border=true&background=EB545400&ring=FEFE5B&currStreakLabel=FEFE5B"
+            src="https://streak-stats.demolab.com/?user=cobeo2004"
             alt="streaks"
             loading="lazy"
             className="w-full h-auto"
@@ -74,7 +74,7 @@ const AboutDetails = () => {
         </AboutLayout>
         <AboutLayout className="col-span-full md:col-span-6 !p-0">
           <img
-            src="https://github-readme-stats.vercel.app/api/pin/?username=cobeo2004&repo=ticket-hunter&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false&description_lines_count=2"
+            src={`${process.env.NEXT_PUBLIC_README_STATS}/api/pin/?username=cobeo2004&repo=ticket-hunter&show_icons=true&theme=transparent&hide_border=true&title_color=FEFE5B&icon_color=FEFE5B&text_color=FFFFFF&text_bold=false&description_lines_count=2`}
             alt="stats"
             loading="lazy"
             className="w-full h-auto"
