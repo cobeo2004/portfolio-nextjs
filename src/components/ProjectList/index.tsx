@@ -20,7 +20,7 @@ const ProjectList = ({ projects }: { projects: TProjectList[] }) => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="w-full max-w-auto xl:max-w-4xl px-4 mx-auto lg:px-16 space-y-6 md:space-y-8 flex-col items-center"
+      className="w-full max-w-auto xl:max-w-6xl px-4 mx-auto lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center"
     >
       {projects.map((project, index) => (
         <ProjectLayout {...project} key={index}></ProjectLayout>
