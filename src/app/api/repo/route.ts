@@ -25,7 +25,7 @@ const GithubRepoInformations = z.array(
   })
 );
 
-export type GithubRepoInformationsType = z.infer<typeof GithubRepoInformations>;
+export type TGithubRepoInformations = z.infer<typeof GithubRepoInformations>;
 
 export async function GET() {
   try {

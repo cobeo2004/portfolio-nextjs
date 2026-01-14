@@ -37,3 +37,12 @@ export type TTemplateParams = {
   reply_to: string;
   message: string;
 };
+
+export type TMusic = {
+  id: number;
+  name: string;
+  description: string;
+  artist: string;
+  musicUrl: string;
+  coverUrl: string;
+};
