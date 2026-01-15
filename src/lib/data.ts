@@ -246,5 +246,23 @@ export const musicDb = (): TMusic[] => {
       musicUrl: "/assets/music/song/iris-out.mp3",
       coverUrl: "/assets/music/cover/chainsaw-man.jpg",
     },
+    {
+      id: 22,
+      name: "Love Dramatic",
+      description:
+        "Opening of Kaguya-sama: Love is War Season 1, crafted by the GOAT Masayuki Suzuki",
+      artist: "Masayuki Suzuki",
+      musicUrl: "/assets/music/song/love-dramatic.mp3",
+      coverUrl: "/assets/music/cover/kaguya-sama.jpg",
+    },
+    {
+      id: 23,
+      name: "DADDY-DADDY-DO",
+      description:
+        "Opening of Kaguya-sama: Love is War Season 2, crafted by the GOAT Masayuki Suzuki",
+      artist: "Masayuki Suzuki",
+      musicUrl: "/assets/music/song/daddy-daddy-do.mp3",
+      coverUrl: "/assets/music/cover/kaguya-sama.jpg",
+    },
   ];
 };

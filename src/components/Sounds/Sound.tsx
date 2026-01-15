@@ -98,7 +98,7 @@ const Sound = () => {
             {/* Header / Close */}
             <div className="p-4 border-b border-muted/20 flex justify-between items-center">
               <span className="text-sm font-medium text-accent flex items-center gap-2">
-                <ListMusic size={16} /> Music Player
+                <ListMusic size={16} /> Anime OST Player
               </span>
               <button
                 onClick={() => setIsExpanded(false)}
