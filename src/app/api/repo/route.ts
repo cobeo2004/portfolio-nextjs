@@ -13,7 +13,9 @@ const retrieveGithubRepoWithCache =
     let data;
     if (await redis.get("github-repo")) {
       data = await redis.get("github-repo");
-      return typeof data === "string" ? JSON.parse(data) : data;
+      return (
+        typeof data === "string" ? JSON.parse(data) : data
+      ) as TGithubRepoInformations;
     }
     const resp = await fetch(
       `https://api.github.com/users/${env.GITHUB_USERNAME}/repos`,
@@ -30,7 +32,7 @@ const retrieveGithubRepoWithCache =
     await redis.set("github-repo", JSON.stringify(parsedData), {
       ex: 60 * 30,
     });
-    return parsedData;
+    return parsedData as TGithubRepoInformations;
   };
 
 export async function GET(req: NextRequest) {
