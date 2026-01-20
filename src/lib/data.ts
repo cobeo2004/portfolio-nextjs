@@ -16,7 +16,7 @@ Websites:
 
 */
 
-import { TGithubRepoInformations } from "@/app/api/repo/route";
+import { type TGithubRepoInformations } from "@/repositories/github-repo";
 import { TBtnList, TMusic, TProjectList } from "../types";
 
 export const getProjectsData: () => Promise<TProjectList[]> = async () => {

@@ -1,47 +1,49 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
+import { env } from "@/lib/env";
+import { rateLimit, redis } from "@/lib/redis";
+import { getIp } from "@/utils/get-ip";
+import {
+  GithubRepoInformations,
+  TGithubRepoInformations,
+} from "@/repositories/github-repo";
 
-const GithubRepoInformations = z.array(
-  z.object({
-    id: z.number().nullable(),
-    name: z.string().nullable(),
-    full_name: z.string().nullable(),
-    description: z.string().nullable(),
-    url: z.string().nullable(),
-    html_url: z.string().nullable(),
-    language: z.string().nullable(),
-    is_template: z.boolean().nullable(),
-    stargazers_count: z.number().nullable(),
-    watchers_count: z.number().nullable(),
-    updated_at: z.string().nullable(),
-    created_at: z
-      .string()
-      .nullable()
-      .transform((arg) => (arg ? new Date(arg) : null)),
-    pushed_at: z
-      .string()
-      .nullable()
-      .transform((arg) => (arg ? new Date(arg) : null)),
-  })
-);
-
-export type TGithubRepoInformations = z.infer<typeof GithubRepoInformations>;
-
-export async function GET() {
-  try {
+const retrieveGithubRepoWithCache =
+  async (): Promise<TGithubRepoInformations> => {
+    let data;
+    if (await redis.get("github-repo")) {
+      data = await redis.get("github-repo");
+      return typeof data === "string" ? JSON.parse(data) : data;
+    }
     const resp = await fetch(
-      `https://api.github.com/users/${process.env.GITHUB_USERNAME}/repos`,
+      `https://api.github.com/users/${env.GITHUB_USERNAME}/repos`,
       {
         headers: {
-          Authorization: "Bearer " + process.env.GITHUB_TOKEN,
+          Authorization: "Bearer " + env.GITHUB_TOKEN,
           "Content-Type": "application/json",
           Accept: "application/vnd.github.mercy-preview+json",
         },
-      }
+      },
     );
-    const data = await resp.json();
+    data = await resp.json();
     const parsedData = await GithubRepoInformations.parseAsync(data);
-    return NextResponse.json(parsedData, { status: 200 });
+    await redis.set("github-repo", JSON.stringify(parsedData), {
+      ex: 60 * 30,
+    });
+    return parsedData;
+  };
+
+export async function GET(req: NextRequest) {
+  try {
+    const { success } = await rateLimit.limit(getIp(req) ?? "default");
+    if (!success) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded" },
+        { status: 429 },
+      );
+    }
+    const data = await retrieveGithubRepoWithCache();
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.log(error);
     if (error instanceof z.ZodError) {
@@ -49,7 +51,7 @@ export async function GET() {
     }
     return NextResponse.json(
       { error: "Failed to fetch repositories" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
