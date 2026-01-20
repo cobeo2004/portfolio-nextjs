@@ -37,7 +37,8 @@ const retrieveGithubRepoWithCache =
 
 export async function GET(req: NextRequest) {
   try {
-    const { success } = await rateLimit.limit(getIp(req) ?? "default");
+    const ip = getIp(req);
+    const { success } = await rateLimit.limit(ip ?? "default");
     if (!success) {
       return NextResponse.json(
         { error: "Rate limit exceeded" },
