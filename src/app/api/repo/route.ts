@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 import { env } from "@/lib/env";
-import { rateLimit, redis } from "@/lib/redis";
+import { redis } from "@/lib/redis";
+import { checkGithubRateLimit } from "@/lib/rate-limit";
 import { getIp } from "@/utils/get-ip";
 import {
   GithubRepoInformations,
@@ -38,7 +39,7 @@ const retrieveGithubRepoWithCache =
 export async function GET(req: NextRequest) {
   try {
     const ip = getIp(req);
-    const { success } = await rateLimit.limit(ip ?? "default");
+    const success = await checkGithubRateLimit(ip ?? "default");
     if (!success) {
       return NextResponse.json(
         { error: "Rate limit exceeded" },
