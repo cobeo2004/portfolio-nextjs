@@ -46,3 +46,33 @@ export type TMusic = {
   musicUrl: string;
   coverUrl: string;
 };
+
+// Chatbot types
+export type TChatMessage = {
+  id: string;
+  role: "user" | "assistant" | "system";
+  content: string;
+  createdAt: Date;
+};
+
+export type TChatSession = {
+  id: string;
+  messages: TChatMessage[];
+  createdAt: Date;
+};
+
+export type TDocument = {
+  id: string;
+  content: string;
+  metadata: {
+    source?: string;
+    page?: number;
+    chunk?: number;
+    [key: string]: any;
+  };
+  embedding?: number[];
+};
+
+export type TRetrievedDocument = TDocument & {
+  similarity: number;
+};
