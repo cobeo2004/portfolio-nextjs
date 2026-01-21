@@ -13,18 +13,21 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 ## ✨ Key Features
 
 ### 🎨 **Interactive 3D Graphics**
+
 - **Animated 3D Models** - Three.js-powered wizard, staff, and hat models with smooth animations
 - **@react-three/fiber** - React renderer for Three.js with performance optimizations
 - **Environment Lighting** - "Dawn" preset for realistic lighting
 - **SSR Safe** - Dynamic imports with `ssr: false` to prevent hydration issues
 
 ### 🧭 **Smart Navigation**
+
 - **Circular Navigation** - Desktop: rotating circular nav around center point
 - **Responsive Layouts** - Tablet: vertical linear layout, Mobile: 2-column flex
 - **Smooth Animations** - Stagger effects with Framer Motion
 - **Quick Links** - Home, About, Projects, Contact, GitHub, LinkedIn, Instagram, Resume
 
 ### 🎵 **Music Player**
+
 - **23 Anime OST Tracks** - Curated collection from Your Name, Weathering with You, Suzume, and more
 - **Full Controls** - Play/Pause, Skip, Volume, Shuffle, and Repeat-One modes
 - **Visual Playlist** - Album covers with active track highlighting
@@ -32,6 +35,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - **Session Persistence** - Remembers playback state for 3 days
 
 **Featured Artists**:
+
 - Radwimps (Your Name, Weathering with You)
 - Yoasobi (Racing into the Night)
 - Kenshi Yonezu (Fireworks, Iris Out)
@@ -39,6 +43,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - Various anime openings (Naruto, Chainsaw Man, Blue Box, etc.)
 
 ### 🤖 **AI-Powered Chatbot (RAG)**
+
 - **Retrieval-Augmented Generation** - Semantic search over CV content
 - **Context-Aware Responses** - Maintains conversation history
 - **Real-time Streaming** - Responses stream character-by-character
@@ -47,6 +52,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - **Auto-Ingestion** - Automatically loads CV on first chat
 
 **Tech Stack**:
+
 - LLM: OpenRouter (Claude, GPT-4o mini, Llama, Mistral)
 - Vector DB: Supabase pgvector
 - Embeddings: OpenAI text-embedding-3-small
@@ -54,6 +60,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - Rate Limiting: Upstash Redis
 
 ### 📊 **GitHub Projects Integration**
+
 - **Live Repository Sync** - Fetches latest projects from GitHub API
 - **Smart Caching** - 30-minute Redis cache to minimize API calls
 - **Project Cards** - Display repo name, description, stars, watchers, language, update date
@@ -62,6 +69,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - **Rate Limiting** - Per-IP rate limiting to prevent abuse
 
 ### 📧 **Contact Form with EmailJS**
+
 - **Real-time Validation** - Name (3+ chars), Email, Message (50-256 chars)
 - **Toast Notifications** - Success/error feedback with Sonner
 - **Glassmorphism Design** - Modern semi-transparent UI with backdrop blur
@@ -69,6 +77,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - **Email Delivery** - Configurable EmailJS templates
 
 ### 📈 **About Page with GitHub Stats**
+
 - **GitHub Contribution Calendar** - Visual contribution history
 - **GitHub Stats Widget** - Top languages, commit activity, contributions
 - **Skill Icons** - 60+ technology badges
@@ -76,6 +85,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 - **External Stats API** - Powered by GitHub Readme Stats
 
 ### ✨ **Animated Background**
+
 - **Firefly Particles** - Randomly appearing floating particles
 - **Glow Effects** - Yellow/white radial gradient glow
 - **Continuous Animation** - New particles every 3 seconds
@@ -84,6 +94,7 @@ Heavily adopted from: [CodeBucks: Build an Amazing Personal Portfolio Website wi
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - **Node.js** 18+ or **Bun** 1.0+
 - **Package Manager**: npm, yarn, pnpm, or bun (bun recommended)
 
@@ -135,11 +146,13 @@ The portfolio includes an intelligent AI chatbot powered by RAG (Retrieval-Augme
 ### Quick Setup (5 minutes)
 
 **Step 1: Setup Supabase Vector Store**
+
 1. Go to [Supabase](https://supabase.com) and create a new project
 2. Enable pgvector extension: SQL Editor → New Query → Run from `CHATBOT_SETUP.md`
 3. Note your `Project URL` and create an `anon key`
 
 **Step 2: Get API Keys**
+
 - OpenRouter: [https://openrouter.ai](https://openrouter.ai) → Dashboard → Create Key
 - OpenAI: [https://platform.openai.com](https://platform.openai.com) → API Keys → Create
 - Upstash: [https://upstash.com](https://upstash.com) → Redis → Create DB
@@ -205,6 +218,7 @@ The RAG pipeline consists of 7 steps:
 ```
 
 **Key Features**:
+
 - **Conversation Memory** - Maintains chat history for context
 - **Semantic Search** - Finds relevant information using embeddings
 - **Smart Filtering** - Rejects off-topic queries gracefully
@@ -215,6 +229,7 @@ The RAG pipeline consists of 7 steps:
 ### API Endpoints
 
 #### `POST /api/chat`
+
 Send a message to the chatbot
 
 ```bash
@@ -228,6 +243,7 @@ curl -X POST http://localhost:3000/api/chat \
 ```
 
 #### `POST /api/ingest`
+
 Manually trigger CV ingestion
 
 ```bash
@@ -235,6 +251,7 @@ curl -X POST http://localhost:3000/api/ingest
 ```
 
 #### `GET /api/ingest`
+
 Check ingestion status
 
 ```bash
@@ -242,6 +259,7 @@ curl http://localhost:3000/api/ingest
 ```
 
 #### `DELETE /api/ingest`
+
 Clear ingested documents (for re-ingestion)
 
 ```bash
@@ -260,36 +278,39 @@ const systemPrompt = "Your custom instructions here...";
 const offTopicKeywords = ["word1", "word2"];
 
 // Fine-tune LLM parameters
-const temperature = 0.7;        // Creativity (0-1)
-const max_tokens = 1024;        // Response length
-const top_p = 0.9;             // Nucleus sampling
+const temperature = 0.7; // Creativity (0-1)
+const max_tokens = 1024; // Response length
+const top_p = 0.9; // Nucleus sampling
 ```
 
 ### Models Supported
 
 OpenRouter supports 100+ models. Popular choices:
 
-| Model | Speed | Cost | Quality | Recommended For |
-|-------|-------|------|---------|-----------------|
-| `openai/gpt-4o-mini` | Fast | $ | High | **General use** |
-| `anthropic/claude-3.5-sonnet` | Medium | $$ | Excellent | Complex questions |
-| `meta-llama/llama-3.1-405b` | Medium | $ | Very Good | Open source preference |
-| `google/gemini-pro` | Fast | $ | Good | Balance of speed/cost |
+| Model                         | Speed  | Cost | Quality   | Recommended For        |
+| ----------------------------- | ------ | ---- | --------- | ---------------------- |
+| `openai/gpt-4o-mini`          | Fast   | $    | High      | **General use**        |
+| `anthropic/claude-3.5-sonnet` | Medium | $$   | Excellent | Complex questions      |
+| `meta-llama/llama-3.1-405b`   | Medium | $    | Very Good | Open source preference |
+| `google/gemini-pro`           | Fast   | $    | Good      | Balance of speed/cost  |
 
 See [OpenRouter Models](https://openrouter.ai/docs/models) for full list and pricing.
 
 ### Troubleshooting
 
 **"Chatbot not responding"**
+
 - Check `.env.local` has all required keys
 - Verify Supabase SQL schema is created
 - Check OpenRouter API key is valid
 
 **"Rate limit exceeded"**
+
 - Wait 15 minutes before next message
 - Adjust limit in `src/lib/rate-limit.ts`
 
 **"No response or slow response"**
+
 - Try a different model in `OPENROUTER_MODEL`
 - Check network in browser DevTools
 - Verify Supabase connection
@@ -303,6 +324,7 @@ The portfolio automatically fetches and displays your latest GitHub repositories
 ### Setup
 
 Add to `.env.local`:
+
 ```bash
 GITHUB_TOKEN=ghp_YOUR_GITHUB_TOKEN        # Personal access token
 GITHUB_USERNAME=your_github_username       # Your GitHub username
@@ -377,6 +399,7 @@ The contact form is powered by EmailJS, allowing visitors to send you messages d
 4. Get Service ID, Template ID, and Public Key
 
 Add to `.env.local`:
+
 ```bash
 NEXT_PUBLIC_SERVICE_ID=service_xxxxxxxxx
 NEXT_PUBLIC_TEMPLATE_ID=template_xxxxxxxxx
@@ -398,16 +421,17 @@ Modify CSS variables in `src/app/globals.css`:
 
 ```css
 :root {
-  --background: 27 27 27;      /* Main background (dark gray) */
-  --foreground: 225 225 225;   /* Main text (light gray) */
-  --muted: 115 115 115;        /* Secondary text (gray) */
-  --accent: 254 254 91;        /* Primary interactive (yellow) */
+  --background: 27 27 27; /* Main background (dark gray) */
+  --foreground: 225 225 225; /* Main text (light gray) */
+  --muted: 115 115 115; /* Secondary text (gray) */
+  --accent: 254 254 91; /* Primary interactive (yellow) */
 }
 ```
 
 ### Tailwind Configuration
 
 Customize in `tailwind.config.ts`:
+
 - Custom colors
 - Screen breakpoints (xs: 480px for mobile)
 - Animation presets (spin-slow, spin-slow-rev)
@@ -416,6 +440,7 @@ Customize in `tailwind.config.ts`:
 ### Navigation Items
 
 Edit `src/lib/data.ts` to customize:
+
 - Navigation links and order
 - External URLs (GitHub, LinkedIn, etc.)
 - Resume download link
@@ -487,6 +512,7 @@ portfolio/
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React 19.2.3** - UI library
 - **Next.js 16.1.1** - React framework with App Router
 - **TypeScript 5.9.3** - Type-safe JavaScript
@@ -494,26 +520,31 @@ portfolio/
 - **Framer Motion 11.18.2** - Smooth animations & transitions
 
 ### 3D Graphics
+
 - **Three.js 0.165.0** - 3D graphics library
 - **@react-three/fiber 9.5.0** - React renderer for Three.js
 - **@react-three/drei 9.122.0** - Useful Three.js helpers & presets
 
 ### AI & LLM
+
 - **OpenRouter** - Unified LLM API (Claude, GPT-4o, Llama, etc.)
 - **LangChain.js** - AI orchestration & text processing
 - **Supabase pgvector** - Vector database for embeddings
 - **OpenAI Embeddings** - text-embedding-3-small
 
 ### Forms & Validation
+
 - **React Hook Form 7.71.1** - Efficient form state management
 - **Zod 4.3.5** - TypeScript-first schema validation
 - **EmailJS** - Email delivery from client-side
 
 ### Data & Caching
+
 - **@tanstack/react-query 5.90.19** - Server state management
 - **Upstash Redis** - Serverless Redis for caching & rate limiting
 
 ### Utilities
+
 - **Sonner 1.7.4** - Toast notifications
 - **Lucide React 0.396.0** - Icon library
 - **clsx 2.1.1** - Conditional className utility
@@ -565,17 +596,20 @@ git push origin main
 ### Docker
 
 **Building locally:**
+
 ```bash
 docker build -t portfolio-nextjs -f ./Dockerfile .
 docker run -p 3000:3000 portfolio-nextjs
 ```
 
 **Using docker-compose:**
+
 ```bash
 docker-compose up -d
 ```
 
 **Pulling from Docker Hub:**
+
 ```bash
 docker pull cobeo2004/portfolio-nextjs:production
 docker run -p 3000:3000 cobeo2004/portfolio-nextjs:production
@@ -583,8 +617,6 @@ docker run -p 3000:3000 cobeo2004/portfolio-nextjs:production
 
 ## 📚 Documentation
 
-- **[CHATBOT_SETUP.md](./CHATBOT_SETUP.md)** - Detailed RAG chatbot configuration guide
-- **[CHATBOT_FIX.md](./CHATBOT_FIX.md)** - Technical implementation details and streaming fixes
 - **[Vercel AI SDK](https://sdk.vercel.ai)** - AI integration documentation
 - **[OpenRouter API](https://openrouter.ai/docs)** - LLM provider documentation
 - **[Supabase Docs](https://supabase.com/docs)** - Vector database setup
@@ -615,10 +647,9 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## 📞 Support
 
-- 📧 Contact: [Fill in contact details]
-- 🐙 GitHub: [Your GitHub profile]
-- 💼 LinkedIn: [Your LinkedIn profile]
-- 🐦 Twitter: [Your Twitter handle]
+- 📧 Contact: nxuantuanminh@gmail.com
+- 🐙 GitHub: [cobeo2004](https://github.com/cobeo2004/)
+- 💼 LinkedIn: [Simon Nguyen](https://www.linkedin.com/in/simon-nguyen-7836822b5/)
 
 ## 🔄 Development Workflow
 
@@ -663,15 +694,6 @@ git push origin feature/amazing-feature
 3. **Optimize images** - Compress album covers and backgrounds
 4. **Monitor bundle size** - Use `next/bundle-analyzer` if needed
 5. **Rate limiting** - Prevents overload from chatbot and projects API
-
-## 🎯 Roadmap
-
-- [ ] Add more 3D models and animations
-- [ ] Implement conversation persistence for chatbot
-- [ ] Add mobile app version
-- [ ] Deploy chatbot to production
-- [ ] Add analytics dashboard
-- [ ] Implement dark/light theme toggle
 
 ---
 
