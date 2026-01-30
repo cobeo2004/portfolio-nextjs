@@ -20,21 +20,26 @@ import { type TGithubRepoInformations } from "@/repositories/github-repo";
 import { TBtnList, TMusic, TProjectList } from "../types";
 
 export const getProjectsData: () => Promise<TProjectList[]> = async () => {
-  const resp = await fetch("/api/repo");
-  const data = (await resp.json()) as TGithubRepoInformations;
-  return data.map((repo) => ({
-    id: repo.id ?? 0,
-    name: repo.name ?? "",
-    full_name: repo.full_name ?? "",
-    description: repo.description ?? "",
-    date: repo.updated_at ?? new Date().toISOString(),
-    language: repo.language ?? "",
-    is_template: repo.is_template ?? false,
-    stargazers_count: repo.stargazers_count ?? 0,
-    watchers_count: repo.watchers_count ?? 0,
-    html_url: repo.html_url ?? "",
-    demoLink: repo.html_url ?? "",
-  })) as TProjectList[];
+  try {
+    const resp = await fetch("/api/repo");
+    const data = (await resp.json()) as TGithubRepoInformations;
+    return data.map((repo) => ({
+      id: repo.id ?? 0,
+      name: repo.name ?? "",
+      full_name: repo.full_name ?? "",
+      description: repo.description ?? "",
+      date: repo.updated_at ?? new Date().toISOString(),
+      language: repo.language ?? "",
+      is_template: repo.is_template ?? false,
+      stargazers_count: repo.stargazers_count ?? 0,
+      watchers_count: repo.watchers_count ?? 0,
+      html_url: repo.html_url ?? "",
+      demoLink: repo.html_url ?? "",
+    })) as TProjectList[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 export const BtnList: TBtnList[] = [

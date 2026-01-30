@@ -3,77 +3,86 @@ import { loadAndPrepareCV } from "@/lib/pdf-loader";
 import { storeDocuments, clearDocuments, hasDocuments } from "@/lib/vectorstore";
 
 export async function POST() {
-  try {
-    // Check if already ingested
-    const alreadyIngested = await hasDocuments();
-
-    if (alreadyIngested) {
-      return NextResponse.json(
-        {
-          message: "Documents already ingested. Use DELETE to re-ingest.",
-          status: "already_exists",
-        },
-        { status: 200 }
-      );
-    }
-
-    // Load and prepare CV
-    console.log("Loading CV...");
-    const documents = await loadAndPrepareCV();
-    console.log(`Loaded ${documents.length} chunks`);
-
-    // Store in vector database
-    console.log("Storing documents...");
-    await storeDocuments(documents);
-
-    return NextResponse.json({
-      message: "CV successfully ingested",
-      status: "success",
-      chunksProcessed: documents.length,
-    });
-  } catch (error) {
-    console.error("Ingestion error:", error);
+  const alreadyIngestedResult = await hasDocuments();
+  if (alreadyIngestedResult.isErr()) {
+    console.error("Check error:", alreadyIngestedResult.error);
     return NextResponse.json(
-      {
-        message: "Failed to ingest CV",
-        error: error instanceof Error ? error.message : "Unknown error",
-      },
+      { message: "Failed to check ingestion status", error: alreadyIngestedResult.error.message },
       { status: 500 }
     );
   }
+
+  if (alreadyIngestedResult.value) {
+    return NextResponse.json(
+      {
+        message: "Documents already ingested. Use DELETE to re-ingest.",
+        status: "already_exists",
+      },
+      { status: 200 }
+    );
+  }
+
+  console.log("Loading CV...");
+  const documentsResult = await loadAndPrepareCV();
+  if (documentsResult.isErr()) {
+    console.error("Load error:", documentsResult.error);
+    return NextResponse.json(
+      { message: "Failed to load CV", error: documentsResult.error.message },
+      { status: 500 }
+    );
+  }
+
+  const documents = documentsResult.value;
+  console.log(`Loaded ${documents.length} chunks`);
+
+  console.log("Storing documents...");
+  const storeResult = await storeDocuments(documents);
+  if (storeResult.isErr()) {
+    console.error("Store error:", storeResult.error);
+    return NextResponse.json(
+      { message: "Failed to store documents", error: storeResult.error.message },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({
+    message: "CV successfully ingested",
+    status: "success",
+    chunksProcessed: documents.length,
+  });
 }
 
 export async function DELETE() {
-  try {
-    await clearDocuments();
-    return NextResponse.json({
-      message: "All documents cleared successfully",
-      status: "success",
-    });
-  } catch (error) {
-    console.error("Clear error:", error);
+  const clearResult = await clearDocuments();
+  if (clearResult.isErr()) {
+    console.error("Clear error:", clearResult.error);
     return NextResponse.json(
       {
         message: "Failed to clear documents",
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: clearResult.error.message,
       },
       { status: 500 }
     );
   }
+
+  return NextResponse.json({
+    message: "All documents cleared successfully",
+    status: "success",
+  });
 }
 
 export async function GET() {
-  try {
-    const exists = await hasDocuments();
-    return NextResponse.json({
-      ingested: exists,
-      status: exists ? "ready" : "not_ready",
-    });
-  } catch (error) {
-    console.error("Check error:", error);
+  const existsResult = await hasDocuments();
+  if (existsResult.isErr()) {
+    console.error("Check error:", existsResult.error);
     return NextResponse.json(
       { error: "Failed to check ingestion status" },
       { status: 500 }
     );
   }
+
+  return NextResponse.json({
+    ingested: existsResult.value,
+    status: existsResult.value ? "ready" : "not_ready",
+  });
 }

@@ -72,19 +72,38 @@ export async function POST(req: NextRequest) {
       "unknown";
 
     // Check rate limit
-    const allowed = await checkRateLimit(ip);
-    if (!allowed) {
+    const rateLimitResult = await checkRateLimit(ip);
+    if (rateLimitResult.isErr()) {
+      if (rateLimitResult.error.message === "Rate limit exceeded") {
+        return new Response(
+          JSON.stringify({
+            error: "Rate limit exceeded. Please try again in a few minutes.",
+          }),
+          { status: 429 }
+        );
+      }
+      console.error("Rate limit error:", rateLimitResult.error);
       return new Response(
         JSON.stringify({
-          error: "Rate limit exceeded. Please try again in a few minutes.",
+          error: "Rate limit check failed. Please try again.",
         }),
-        { status: 429 }
+        { status: 500 }
       );
     }
 
     // Check if documents are ingested
-    const documentsExist = await hasDocuments();
-    if (!documentsExist) {
+    const documentsExistResult = await hasDocuments();
+    if (documentsExistResult.isErr()) {
+      console.error("Documents check error:", documentsExistResult.error);
+      return new Response(
+        JSON.stringify({
+          error: "Failed to check knowledge base. Please try again.",
+        }),
+        { status: 500 }
+      );
+    }
+
+    if (!documentsExistResult.value) {
       // Auto-trigger ingestion
       console.log("No documents found. Triggering ingestion...");
 
