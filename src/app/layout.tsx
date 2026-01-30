@@ -6,7 +6,7 @@ import FireFlyBackground from "../components/background/FireFlyBackground";
 import Sound from "@/components/Sounds/Sound";
 import QueryProvider from "@/providers/QueryProvider";
 import ChatButton from "@/components/chatbot/ChatButton";
-
+import { Analytics } from "@vercel/analytics/next";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body
         className={clsx(
           inter.variable,
-          "bg-background text-foreground font-inter"
+          "bg-background text-foreground font-inter",
         )}
       >
         <div className="z-0">
@@ -38,6 +38,7 @@ export default function RootLayout({
         </div>
         <div id="my-modal" />
         <QueryProvider>{children}</QueryProvider>
+        <Analytics />
       </body>
     </html>
   );
