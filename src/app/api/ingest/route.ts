@@ -1,14 +1,28 @@
 import { NextResponse } from "next/server";
 import { loadAndPrepareCV } from "@/lib/pdf-loader";
-import { storeDocuments, clearDocuments, hasDocuments } from "@/lib/vectorstore";
+import {
+  storeDocuments,
+  clearDocuments,
+  hasDocuments,
+} from "@/lib/vectorstore";
+import { env } from "@/lib/env";
 
 export async function POST() {
+  if (env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      { message: "This endpoint is only available in development mode" },
+      { status: 403 },
+    );
+  }
   const alreadyIngestedResult = await hasDocuments();
   if (alreadyIngestedResult.isErr()) {
     console.error("Check error:", alreadyIngestedResult.error);
     return NextResponse.json(
-      { message: "Failed to check ingestion status", error: alreadyIngestedResult.error.message },
-      { status: 500 }
+      {
+        message: "Failed to check ingestion status",
+        error: alreadyIngestedResult.error.message,
+      },
+      { status: 500 },
     );
   }
 
@@ -18,7 +32,7 @@ export async function POST() {
         message: "Documents already ingested. Use DELETE to re-ingest.",
         status: "already_exists",
       },
-      { status: 200 }
+      { status: 200 },
     );
   }
 
@@ -28,7 +42,7 @@ export async function POST() {
     console.error("Load error:", documentsResult.error);
     return NextResponse.json(
       { message: "Failed to load CV", error: documentsResult.error.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -40,8 +54,11 @@ export async function POST() {
   if (storeResult.isErr()) {
     console.error("Store error:", storeResult.error);
     return NextResponse.json(
-      { message: "Failed to store documents", error: storeResult.error.message },
-      { status: 500 }
+      {
+        message: "Failed to store documents",
+        error: storeResult.error.message,
+      },
+      { status: 500 },
     );
   }
 
@@ -53,6 +70,12 @@ export async function POST() {
 }
 
 export async function DELETE() {
+  if (env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      { message: "This endpoint is only available in development mode" },
+      { status: 403 },
+    );
+  }
   const clearResult = await clearDocuments();
   if (clearResult.isErr()) {
     console.error("Clear error:", clearResult.error);
@@ -61,7 +84,7 @@ export async function DELETE() {
         message: "Failed to clear documents",
         error: clearResult.error.message,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -77,7 +100,7 @@ export async function GET() {
     console.error("Check error:", existsResult.error);
     return NextResponse.json(
       { error: "Failed to check ingestion status" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 

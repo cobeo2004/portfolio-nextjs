@@ -22,6 +22,9 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: z.string(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
   },
+  shared: {
+    NODE_ENV: z.enum(["development", "production"]),
+  },
   runtimeEnv: {
     GITHUB_TOKEN: process.env.GITHUB_TOKEN,
     GITHUB_USERNAME: process.env.GITHUB_USERNAME,
@@ -40,5 +43,7 @@ export const env = createEnv({
     // Supabase Public Configuration
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    // Node Env
+    NODE_ENV: process.env.NODE_ENV,
   },
 });
