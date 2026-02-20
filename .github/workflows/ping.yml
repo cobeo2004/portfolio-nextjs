@@ -17,9 +17,9 @@ jobs:
     steps:
       - name: Ping Supabase
         run: |
-          curl -L -X GET '${{ secrets.SUPABASE_URL }}/functions/v1/ping' \
-          -H 'Authorization: Bearer ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}' \
-          -H 'apikey: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}' \
+          curl -L -X GET '${{ env.SUPABASE_URL }}/functions/v1/ping' \
+          -H 'Authorization: Bearer ${{ env.SUPABASE_PUBLISHABLE_KEY }}' \
+          -H 'apikey: ${{ env.SUPABASE_PUBLISHABLE_KEY }}' \
           -H 'Content-Type: application/json'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
