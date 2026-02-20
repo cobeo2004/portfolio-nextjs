@@ -1,0 +1,29 @@
+name: Ping Supabase Service
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  ping-supabase:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -L -X POST '${{ secrets.SUPABASE_URL }}/functions/v1/ping' \
+          -H 'Authorization: Bearer ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}' \
+          -H 'apikey: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}' \
+          -H 'Content-Type: application/json' \
+          --data '{"name":"Functions"}'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+
+
