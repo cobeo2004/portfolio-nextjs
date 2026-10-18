@@ -17,7 +17,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SERVICE_ID: z.string(),
     NEXT_PUBLIC_KEY: z.string(),
     NEXT_PUBLIC_TEMPLATE_ID: z.string(),
-    NEXT_PUBLIC_README_STATS: z.string(),
     // Supabase Public Configuration
     NEXT_PUBLIC_SUPABASE_URL: z.string(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
@@ -33,7 +32,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SERVICE_ID: process.env.NEXT_PUBLIC_SERVICE_ID,
     NEXT_PUBLIC_KEY: process.env.NEXT_PUBLIC_KEY,
     NEXT_PUBLIC_TEMPLATE_ID: process.env.NEXT_PUBLIC_TEMPLATE_ID,
-    NEXT_PUBLIC_README_STATS: process.env.NEXT_PUBLIC_README_STATS,
     // OpenRouter & AI Configuration
     OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
     OPENROUTER_MODEL: process.env.OPENROUTER_MODEL,
@@ -46,4 +44,6 @@ export const env = createEnv({
     // Node Env
     NODE_ENV: process.env.NODE_ENV,
   },
+  // Lets `docker build` compile without secrets; they are checked again when the server starts.
+  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

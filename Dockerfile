@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -27,10 +27,9 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN yarn build
-
-# If using npm comment out above and use below instead
-# RUN npm run build
+# Secrets are not available at build time; env validation runs when the server starts.
+ENV SKIP_ENV_VALIDATION=1
+RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner

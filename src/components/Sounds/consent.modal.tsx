@@ -10,7 +10,7 @@ export const Modal = ({
   return createPortal(
     <div className="fixed inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-background/20 border border-accent/30 border-solid backdrop-blur-[6px] py-8 px-6 xs:px-10 sm:px-16 rounded shadow-glass-inset text-center space-y-8">
-        <p className="font-light">Wanted to switch on the magical music ?</p>
+        <p className="font-light">Switch on the magical music?</p>
         <div className="flex items-center justify-center space-x-4">
           <button
             onClick={toggle}
@@ -27,6 +27,6 @@ export const Modal = ({
         </div>
       </div>
     </div>,
-    document.getElementById("my-modal")!
+    document.getElementById("my-modal")!,
   );
 };

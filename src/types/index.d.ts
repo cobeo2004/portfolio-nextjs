@@ -1,11 +1,3 @@
-export type TBtnList = {
-  label: string;
-  link: string;
-  icon: string;
-  newTab: boolean;
-  labelDirection?: "left" | "right";
-};
-
 export type TProjectList = {
   id: number;
   name: string;
@@ -20,12 +12,6 @@ export type TProjectList = {
   demoLink: string;
 };
 
-export type TCoordinateStyle = {
-  x: number | string;
-  y: number | string;
-};
-
-export type TNavButtonProps = TCoordinateStyle & TBtnList;
 export type TFormValue = {
   name: string;
   email: string;
@@ -75,4 +61,110 @@ export type TDocument = {
 
 export type TRetrievedDocument = TDocument & {
   similarity: number;
+};
+
+// Site content types
+export type TTheme = "light" | "dark" | "wizard";
+
+export type TNavItem = {
+  href: string;
+  key: string;
+  title: string;
+  sub: string;
+};
+
+export type TFact = {
+  count: number | null;
+  pre: string;
+  suf: string;
+  label: string;
+  text: string;
+};
+
+export type TProjectCategory = "ai" | "backend" | "design";
+
+export type TProjectThumb =
+  | { kind: "image"; src: string; alt: string }
+  | {
+      kind: "tile";
+      tone: "cobalt" | "ink" | "soft";
+      big: string;
+      small: string;
+    };
+
+export type TProject = {
+  slug: string;
+  title: string;
+  hl?: string;
+  meta: string;
+  desc: string;
+  cats: TProjectCategory[];
+  size: "wide" | "half" | "third";
+  thumb: TProjectThumb;
+  link?: { href: string; label: string; external?: boolean };
+};
+
+export type TProjectFilter = {
+  key: "all" | TProjectCategory;
+  label: string;
+};
+
+export type TStackPanel = {
+  slug: string;
+  meta: string;
+  title: string;
+  hl: string;
+  after?: string;
+  desc: string;
+  tags: string[];
+  nums: { big: string; small: string }[];
+  cta?: { href: string; label: string; external?: boolean };
+};
+
+export type TRole = {
+  logo?: { src: string; alt: string; fill?: boolean };
+  mono: string;
+  title: string;
+  org: string;
+  when: string;
+  points: string[];
+};
+
+export type TSideProject = {
+  year: string;
+  name: string;
+  desc: string;
+};
+
+export type TAward = {
+  big: string;
+  title: string;
+  text: string;
+  link?: string;
+};
+
+export type TCapability = {
+  title: string;
+  text: string;
+};
+
+export type TSkill = {
+  label: string;
+  to: string[];
+};
+
+export type TSkillTarget = {
+  id: string;
+  label: string;
+};
+
+export type TSuggestedQuestion = {
+  question: string;
+  fallback: string;
+};
+
+export type TCaseStep = {
+  rail: string;
+  title: string;
+  text: string;
 };
