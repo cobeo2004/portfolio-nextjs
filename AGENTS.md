@@ -3,8 +3,8 @@
 This document provides essential context, commands, and conventions for AI agents (and human developers) working on this Next.js portfolio project.
 
 ## 1. Project Overview
-- **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Three.js (@react-three/fiber).
-- **Key Features**: 3D Wizard model, Circular Navigation, EmailJS contact form, Responsive design hooks.
+- **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, GSAP, Lenis, Three.js (@react-three/fiber, wizard mode only).
+- **Key Features**: Multi-page portfolio with scroll motion, light/dark themes, Ask my CV (RAG) palette, EmailJS contact form, hidden wizard mode with the 3D wizard and music player.
 - **Package Manager**: Bun (preferred) or npm.
 
 ## 2. Environment & Commands
@@ -31,7 +31,7 @@ This document provides essential context, commands, and conventions for AI agent
 - **Strict Mode**: Enabled.
 - **Type Definitions**: 
     - Use `type` alias over `interface` generally.
-    - Convention: Prefix types with `T` (e.g., `TBtnList`, `TProjectList`) as seen in `src/types/index.d.ts`.
+    - Convention: Prefix types with `T` (e.g., `TProject`, `TProjectList`) as seen in `src/types/index.d.ts`.
 - **Path Aliases**: Use `@/` to refer to the `src` directory (e.g., `@/components/...`).
 
 ### Components (React/Next.js)
@@ -43,19 +43,25 @@ This document provides essential context, commands, and conventions for AI agent
     - Wrap models in `RenderModel` component.
 
 ### CSS / Styling
-- **Tailwind**: Primary styling method. Use utility classes.
-- **Custom Config**: Theme colors and extensions are in `tailwind.config.ts`.
-- **Global Styles**: Defined in `src/app/globals.css` (CSS variables for themes).
+- **Design system**: Tokens (CSS variables for light, dark and wizard) and component classes live in `src/app/globals.css`.
+- **Tailwind**: Use utility classes for one-off layout, spacing and sizing; tokens are exposed in `tailwind.config.ts` (`bg-paper`, `text-ink-2`, `bg-cobalt`, `font-display`). Avoid inline `style` except for data-driven values.
+
+### Motion
+- Register nothing yourself: import GSAP and plugins from `@/lib/gsap`.
+- Prefer the declarative data attributes handled by `src/components/motion/PageMotion.tsx` (`data-split`, `data-rise`, `data-row`, `data-reveal`, `data-count`, `data-par`, `data-light`, `data-stack`).
+- Component motion: `gsap.context(..., ref)` inside `useLayoutEffect`, revert on cleanup, and skip when `prefersReducedMotion()`.
+- Internal links use `TransitionLink`; buttons with `data-cmdk` open Ask my CV.
 
 ### State & Hooks
-- **Naming**: camelCase (e.g., `useScreenSize`).
+- **Naming**: camelCase (e.g., `useAskCV`).
 - **Custom Hooks**: Store in `src/hooks/`.
 
 ## 4. Architecture & Key Files
 - **Routes**: `src/app/` (App Router).
-- **Navigation Data**: `src/lib/data.ts` (contains `BtnList`, `projectsData`).
+- **Site content**: `src/lib/data.ts` (`navItems`, `projectsData`, `experienceData`, `suggestedQuestions`, `musicDb`, ...).
+- **Site shell**: `src/providers/SiteProvider.tsx` (theme, overlays, page transitions) read through `useSite()`.
 - **Assets**: 
-    - Images: `public/assets/`
+    - Images: `public/img/` (screenshots, company logos); `public/assets/` (music, models, CV)
     - Models: Ensure `.glb`/`.gltf` files are optimized.
 
 ## 5. Agent Operational Rules
