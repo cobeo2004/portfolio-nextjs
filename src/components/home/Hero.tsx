@@ -108,18 +108,80 @@ function Starfield() {
   return <canvas ref={ref} className="hero-stars" aria-hidden="true" />;
 }
 
-// Hero: my cut-out portrait in the middle with a soft cobalt glow, the role I am hiring for on
-// the left (it cycles), and a short hello on the right, all over a quiet field of stars.
+// Builds the role as words of single letters, so each letter can drift and blur on its own.
+// Words stay unbroken so the title still wraps between words.
+function spell(el: HTMLElement, text: string) {
+  el.textContent = "";
+  const chars: HTMLElement[] = [];
+  text.split(" ").forEach((word, i) => {
+    if (i > 0) el.append(" ");
+    const w = document.createElement("span");
+    w.className = "role-word";
+    for (const c of word) {
+      const ch = document.createElement("span");
+      ch.className = "role-ch";
+      ch.textContent = c;
+      w.append(ch);
+      chars.push(ch);
+    }
+    el.append(w);
+  });
+  return chars;
+}
+
+const rand = (min: number, max: number) => min + Math.random() * (max - min);
+
+// Letters arrive one after another, each settling out of a blur from a small sideways offset.
+function vaporIn(chars: HTMLElement[], em: number) {
+  return gsap.fromTo(
+    chars,
+    {
+      opacity: 0,
+      filter: "blur(10px)",
+      x: () => rand(-0.35, 0.35) * em,
+      y: () => rand(0.05, 0.25) * em,
+    },
+    {
+      opacity: 1,
+      filter: "blur(0px)",
+      x: 0,
+      y: 0,
+      duration: 0.9,
+      ease: "expo.out",
+      stagger: 0.028,
+    },
+  );
+}
+
+// Letters leave like vapour: each one rises, drifts aside, blurs and fades.
+function vaporOut(chars: HTMLElement[], em: number) {
+  return gsap.to(chars, {
+    opacity: 0,
+    filter: "blur(8px)",
+    x: () => rand(-0.5, 0.5) * em,
+    y: () => rand(-0.9, -0.35) * em,
+    duration: 0.6,
+    ease: "power2.in",
+    stagger: 0.022,
+  });
+}
+
+// Hero: my cut-out portrait in the middle with a soft cobalt glow, the role on the left (it
+// cycles through heroRoles letter by letter), and a short hello on the right, over a quiet
+// field of stars.
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
     const hero = ref.current;
-    if (prefersReducedMotion() || !hero) return;
-    let timer = 0;
+    const role = roleRef.current;
+    if (prefersReducedMotion() || !hero || !role) return;
 
     const ctx = gsap.context(() => {
+      const em = () => parseFloat(getComputedStyle(role).fontSize) || 40;
+      let chars = spell(role, heroRoles[0]);
+
       gsap
         .timeline({ defaults: { ease: "expo.out" } })
         .from(".hero-stars", { opacity: 0, duration: 1.6 }, 0)
@@ -129,16 +191,11 @@ export default function Hero() {
           { y: 60, opacity: 0, filter: "blur(16px)", duration: 1.4 },
           0.2,
         )
+        .add(vaporIn(chars, em()), 0.45)
         .from(
-          ".hero-left > *",
-          {
-            x: -32,
-            opacity: 0,
-            filter: "blur(10px)",
-            duration: 1,
-            stagger: 0.1,
-          },
-          0.5,
+          ".hero-left .ctas",
+          { x: -32, opacity: 0, filter: "blur(10px)", duration: 1 },
+          0.9,
         )
         .from(
           ".hero-right > *",
@@ -162,36 +219,23 @@ export default function Hero() {
         repeat: -1,
       });
 
-      // The role on the left blurs out and the next one blurs in.
+      // Every few seconds the role evaporates and the next one condenses in its place. The
+      // chain runs later, so ctx.add keeps its tweens in this context for cleanup.
       let i = 0;
-      timer = window.setInterval(() => {
-        const role = roleRef.current;
-        if (!role) return;
-        i = (i + 1) % heroRoles.length;
-        gsap
-          .timeline()
-          .to(role, {
-            opacity: 0,
-            filter: "blur(12px)",
-            y: -10,
-            duration: 0.45,
-            ease: "power2.in",
-          })
-          .call(() => {
-            role.textContent = heroRoles[i];
-          })
-          .fromTo(
-            role,
-            { opacity: 0, filter: "blur(12px)", y: 14 },
-            {
-              opacity: 1,
-              filter: "blur(0px)",
-              y: 0,
-              duration: 0.7,
-              ease: "expo.out",
-            },
+      const next = () =>
+        ctx.add(() => {
+          i = (i + 1) % heroRoles.length;
+          const size = em();
+          vaporOut(chars, size).then(() =>
+            ctx.add(() => {
+              chars = spell(role, heroRoles[i]);
+              vaporIn(chars, size).eventCallback("onComplete", () => {
+                ctx.add(() => gsap.delayedCall(2.2, next));
+              });
+            }),
           );
-      }, 3200);
+        });
+      gsap.delayedCall(3.4, next);
 
       // Scrolling away: the columns part and blur out, the portrait sinks back.
       const st = {
@@ -224,8 +268,8 @@ export default function Hero() {
     }, hero);
 
     return () => {
-      window.clearInterval(timer);
       ctx.revert();
+      role.textContent = heroRoles[0];
     };
   }, []);
 

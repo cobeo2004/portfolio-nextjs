@@ -52,8 +52,13 @@ export const siteConfig = {
   now: "Forward deployed engineer at Teqar, open to full-time roles",
   description:
     "Forward deployed and full-stack engineer in Melbourne building AI agents on solid backends.",
-  // Cut-out photo for the home hero. Until it is added, the hero shows the SN mark instead.
-  portrait: null as null | {
+  // Cut-out photo for the home hero. Set it to null to show the SN mark instead.
+  portrait: {
+    src: "/img/simon.webp",
+    alt: "Simon Nguyen",
+    width: 842,
+    height: 694,
+  } as null | {
     src: string;
     alt: string;
     width: number;
@@ -70,8 +75,9 @@ export const siteConfig = {
 // The role on the left of the home hero, cycled in this order.
 export const heroRoles = [
   "Forward deployed engineer",
+  "AI engineer",
+  "Software engineer",
   "Full-stack engineer",
-  "AI agents on solid backends",
 ];
 
 export const navItems: TNavItem[] = [

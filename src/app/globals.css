@@ -203,6 +203,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .hero-left { display: grid; gap: 30px; justify-items: start; }
 .hero h1 { font-size: clamp(32px, 3.4vw, 54px); line-height: .95; min-height: 2.85em; display: flex; align-items: flex-end; }
 .role { display: block; text-wrap: balance; }
+.role-word { display: inline-block; white-space: nowrap; }
+.role-ch { display: inline-block; will-change: transform, filter, opacity; }
 .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
 .me { position: relative; margin: 0; aspect-ratio: 1; display: grid; place-items: end center; }
 .me-glow { position: absolute; inset: 12% 4% -4%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--cobalt) 55%, transparent), color-mix(in srgb, var(--cobalt) 16%, transparent) 60%, transparent 100%); filter: blur(28px); }
@@ -225,7 +227,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .hero { min-height: 0; padding-bottom: 48px; }
   .hero-grid { grid-template-columns: 1fr; gap: 28px; }
   .me { order: -1; width: min(78vw, 360px); justify-self: center; }
-  .hero h1 { min-height: 0; }
+  .hero h1 { min-height: 1.9em; }
 }
 
 /* Facts strip */
