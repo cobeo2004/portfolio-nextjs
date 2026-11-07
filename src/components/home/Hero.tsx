@@ -5,8 +5,11 @@ import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import HeroReveal from "@/components/home/HeroReveal";
 import Mark from "@/components/icons/Mark";
+import LiquidEther from "@/components/motion/LiquidEther";
+import { useSite } from "@/hooks/useSite";
 import { heroRoles, siteConfig } from "@/lib/data";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import type { TTheme } from "@/types";
 
 type TStar = {
   x: number;
@@ -109,6 +112,13 @@ function Starfield() {
   return <canvas ref={ref} className="hero-stars" aria-hidden="true" />;
 }
 
+// Ink colours for the liquid behind the hero, slow to fast, per theme.
+const liquidInk: Record<TTheme, string[]> = {
+  light: ["#1f4bff", "#5a78ff", "#a9b8ff"],
+  dark: ["#1e36b8", "#4d74ff", "#a9bcff"],
+  wizard: ["#6b4a0f", "#f2b33d", "#ffe3a3"],
+};
+
 // Builds the role as words of single letters, so each letter can drift and blur on its own.
 // Words stay unbroken so the title still wraps between words.
 function spell(el: HTMLElement, text: string) {
@@ -171,6 +181,7 @@ function vaporOut(chars: HTMLElement[], em: number) {
 // cycles through heroRoles letter by letter), and a short hello on the right, over a quiet
 // field of stars.
 export default function Hero() {
+  const { theme } = useSite();
   const ref = useRef<HTMLElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
 
@@ -185,6 +196,11 @@ export default function Hero() {
 
       gsap
         .timeline({ defaults: { ease: "expo.out" } })
+        .from(
+          ".hero-liquid",
+          { opacity: 0, duration: 2, clearProps: "opacity" },
+          0,
+        )
         .from(".hero-stars", { opacity: 0, duration: 1.6 }, 0)
         .from(".me-glow", { scale: 0.4, opacity: 0, duration: 1.6 }, 0.1)
         .from(
@@ -276,6 +292,16 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top" ref={ref}>
+      <LiquidEther
+        className="hero-liquid"
+        colors={liquidInk[theme]}
+        lightMode={theme === "light"}
+        mouseForce={18}
+        cursorSize={110}
+        autoSpeed={0.4}
+        autoIntensity={1.8}
+        clickBurst={false}
+      />
       <Starfield />
       <span className="hero-haze" aria-hidden="true" />
       <HeroReveal />
