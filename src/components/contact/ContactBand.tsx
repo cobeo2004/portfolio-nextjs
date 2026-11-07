@@ -18,7 +18,7 @@ export default function ContactBand({ page = false }: { page?: boolean }) {
       <div className="wrap">
         <div>
           {page ? (
-            <h1 className="display" data-split data-now>
+            <h1 className="display" data-kinetic>
               Let&apos;s ship something real.
             </h1>
           ) : (

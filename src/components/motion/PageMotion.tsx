@@ -9,7 +9,8 @@ import {
 } from "@/lib/gsap";
 
 // Scroll motion shared by every page, driven by data attributes in the markup:
-//   data-split      headline lines rise through masks (data-now plays it on load)
+//   data-kinetic    page titles assemble letter by letter on arrival
+//   data-split      section headings do a lighter version once, on scroll
 //   data-rise       blocks rise and fade in; data-row rows slide in from the left
 //   data-reveal     images wipe open from the bottom and settle
 //   data-count      numbers count up (data-pre / data-suf around the value)
@@ -17,7 +18,7 @@ import {
 //   data-light      a paragraph lights up word by word while scrolling
 //   data-stack      sticky panels shrink back as the next one arrives
 //   data-rise-band  the contact band's stair blocks
-// Every scroll-in plays in reverse when you scroll back up past it.
+// Other scroll-ins play in reverse when you scroll back up past them.
 export default function PageMotion() {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
@@ -29,37 +30,47 @@ export default function PageMotion() {
     const mm = gsap.matchMedia();
 
     const ctx = gsap.context(() => {
-      q<HTMLElement>("[data-split]").forEach((h) => {
-        const onLoad = h.hasAttribute("data-now");
+      // Page titles: letters rise out of their line and stretch to full width, like the
+      // Archivo width axis opening up. Transform only, so nothing around them moves.
+      q<HTMLElement>("[data-kinetic]").forEach((h) => {
         SplitText.create(h, {
-          type: "lines",
+          type: "lines,words,chars",
           mask: "lines",
           linesClass: "ln",
+          charsClass: "ch",
           autoSplit: true,
           onSplit: (self) =>
-            onLoad
-              ? gsap.from(self.lines, {
-                  yPercent: 105,
-                  duration: 1,
-                  ease: "expo.out",
-                  stagger: 0.09,
-                  delay: 0.25,
-                })
-              : gsap.fromTo(
-                  self.lines,
-                  { yPercent: 105 },
-                  {
-                    yPercent: 0,
-                    duration: 1,
-                    ease: "expo.out",
-                    stagger: 0.09,
-                    scrollTrigger: {
-                      trigger: h,
-                      start: "top 88%",
-                      toggleActions: "play none none reverse",
-                    },
-                  },
-                ),
+            gsap.from(self.chars, {
+              yPercent: 115,
+              scaleX: 0.3,
+              rotate: 10,
+              transformOrigin: "0% 100%",
+              duration: 1.1,
+              ease: "expo.out",
+              stagger: 0.035,
+              delay: 0.2,
+            }),
+        });
+      });
+
+      // Section headings: a lighter version of the same move, played once.
+      q<HTMLElement>("[data-split]").forEach((h) => {
+        SplitText.create(h, {
+          type: "lines,words,chars",
+          mask: "lines",
+          linesClass: "ln",
+          charsClass: "ch",
+          autoSplit: true,
+          onSplit: (self) =>
+            gsap.from(self.chars, {
+              yPercent: 105,
+              scaleX: 0.6,
+              transformOrigin: "0% 100%",
+              duration: 0.9,
+              ease: "expo.out",
+              stagger: 0.018,
+              scrollTrigger: { trigger: h, start: "top 88%", once: true },
+            }),
         });
       });
 

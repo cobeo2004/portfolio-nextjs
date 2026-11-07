@@ -631,31 +631,52 @@ export const caseStudySteps: TCaseStep[] = [
     rail: "Joins",
     title: "Joins the call",
     text: "A meeting bot joins Google Meet, Teams or Zoom like any participant and streams the audio in.",
+    log: { who: "bot", line: "Joined Google Meet, streaming audio" },
   },
   {
     rail: "Hears",
     title: "Hears every turn",
     text: "Speech to text and turn detection split the conversation into who said what, and when they finished.",
+    log: { who: "NV", line: "Can we merge the router fix before Friday?" },
   },
   {
     rail: "Addressed?",
     title: "Was it spoken to?",
     text: "An addressing router decides whether a turn is meant for the agent. Most of my week went into tuning this one file.",
+    log: {
+      who: "router",
+      line: "Not for the agent, staying quiet",
+      tone: "no",
+    },
   },
   {
     rail: "My turn?",
     title: "Is it a good moment?",
     text: "A floor controller holds the reply until speaking would not cut anyone off.",
+    log: {
+      who: "SN",
+      line: "Syncnapse, what did we decide about memory? Addressed, waiting for a pause",
+      tone: "yes",
+    },
   },
   {
     rail: "Answers",
     title: "Answers out loud",
     text: "The reply is spoken back into the call. Task routing suggests whether follow-up work goes to a person, an agent or both, with its reasoning.",
+    log: {
+      who: "AI",
+      line: "Memory stays proposed until someone approves it.",
+      tone: "ai",
+    },
   },
   {
     rail: "Remembers",
     title: "Remembers, with approval",
     text: "A slower worker proposes what should become company memory. A person approves it, and permission layers decide who can read it.",
+    log: {
+      who: "memory",
+      line: "Proposed: router fix due Friday. Waiting for approval",
+    },
   },
 ];
 

@@ -1,6 +1,6 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
-import StepsRail from "@/components/case-study/StepsRail";
+import CasePipeline from "@/components/case-study/CasePipeline";
 import ContactBand from "@/components/contact/ContactBand";
 import Crumbs from "@/components/layout/Crumbs";
 import PageMotion from "@/components/motion/PageMotion";
@@ -45,7 +45,7 @@ export default function SyncnapsePage() {
                 { label: "Syncnapse" },
               ]}
             />
-            <h1 className="display" data-split data-now>
+            <h1 className="display" data-kinetic>
               Sync<span className="hl">napse</span>
             </h1>
             <p className="lede mt-7 max-w-[52ch]">
@@ -82,7 +82,7 @@ export default function SyncnapsePage() {
             <h2 className="display h2" data-split>
               How it <span className="hl">works</span>
             </h2>
-            <StepsRail />
+            <CasePipeline />
           </div>
         </section>
         <section>

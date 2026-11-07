@@ -18,7 +18,7 @@ export default function PageHead({
     <section className="page-head">
       <div className="wrap">
         <Crumbs items={crumbs} />
-        <h1 className="display" data-split data-now>
+        <h1 className="display" data-kinetic>
           {title}
           <span className="hl">{hl}</span>
         </h1>

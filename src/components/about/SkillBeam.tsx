@@ -74,7 +74,7 @@ export default function SkillBeam() {
   const targets = skillsData[active].to;
 
   return (
-    <section className="block-pad pt-10">
+    <section className="block-pad pt-10" id="skills">
       <div className="wrap">
         <h2 className="display h2" data-split>
           What I <span className="hl">reach for</span>

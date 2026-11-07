@@ -5,7 +5,7 @@ import PageMotion from "@/components/motion/PageMotion";
 import Collective from "@/components/work/Collective";
 import GithubFeed from "@/components/work/GithubFeed";
 import MoreProjects from "@/components/work/MoreProjects";
-import WorkGrid from "@/components/work/WorkGrid";
+import WorkList from "@/components/work/WorkList";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -27,7 +27,7 @@ export default function WorkPage() {
           you&apos;re hiring for.
         </p>
       </PageHead>
-      <WorkGrid />
+      <WorkList />
       <Collective />
       <MoreProjects />
       <GithubFeed />
