@@ -2,7 +2,6 @@ import Mark from "@/components/icons/Mark";
 import TransitionLink from "@/components/navigation/TransitionLink";
 import WizardToggle from "@/components/wizard/WizardToggle";
 import { navItems, siteConfig } from "@/lib/data";
-import BigName from "./BigName";
 
 export default function Footer() {
   return (
@@ -54,7 +53,9 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <BigName />
+        <div className="display big-name" aria-hidden="true">
+          Simon Nguyen
+        </div>
       </div>
     </footer>
   );

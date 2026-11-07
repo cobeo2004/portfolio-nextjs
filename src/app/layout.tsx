@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 import CommandPalette from "@/components/chatbot/CommandPalette";
+import Curtain from "@/components/footer/Curtain";
 import Footer from "@/components/footer/Footer";
 import Nav from "@/components/navigation/Nav";
 import WizardMode from "@/components/wizard/WizardMode";
@@ -120,7 +121,9 @@ export default function RootLayout({
             <WizardMode />
             <Nav />
             {children}
-            <Footer />
+            <Curtain>
+              <Footer />
+            </Curtain>
             <CommandPalette />
           </SiteProvider>
         </QueryProvider>

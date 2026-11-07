@@ -27,7 +27,7 @@ const visuals: Record<string, React.ReactNode> = {
     <>
       <Block className="left-0 bottom-0 w-[40%] h-[46%] bg-ink" />
       <Block className="left-[40%] bottom-0 w-[18%] h-[22%] bg-cobalt" />
-      <div className="shot tilt">
+      <div className="shot tilt" data-shot>
         <Image
           src="/img/trustlane.webp"
           alt="TrustLane landing page and claims dashboard"
@@ -58,7 +58,7 @@ const visuals: Record<string, React.ReactNode> = {
     <>
       <Block className="right-0 top-0 w-[22%] h-full bg-cobalt" />
       <Block className="right-[22%] top-0 w-[16%] h-[62%] bg-ink" />
-      <div className="shot tilt">
+      <div className="shot tilt" data-shot>
         <Image
           src="/img/zth.webp"
           alt="From Zero to Hero landing page with app screens for the manager and crew tracks"

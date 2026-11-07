@@ -17,6 +17,7 @@ import {
 //   data-par        parallax by the given percent; data-drift sideways drift
 //   data-light      a paragraph lights up word by word while scrolling
 //   data-stack      sticky panels shrink back as the next one arrives
+//   data-shot       screenshots drift inside their frame and lean with scroll speed
 //   data-rise-band  the contact band's stair blocks
 // Other scroll-ins play in reverse when you scroll back up past them.
 export default function PageMotion() {
@@ -178,6 +179,59 @@ export default function PageMotion() {
             0.1,
           );
       });
+
+      // Screenshots drift inside their frames, and lean with the scroll speed, settling
+      // when scrolling stops. Images only; text never skews.
+      const shots = q<HTMLElement>("[data-shot]");
+      shots.forEach((el) => {
+        const img = el.querySelector("img");
+        if (!img) return;
+        gsap.fromTo(
+          img,
+          { yPercent: -6 },
+          {
+            yPercent: 6,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          },
+        );
+      });
+      if (shots.length) {
+        const skew = gsap.quickTo(shots, "skewY", {
+          duration: 0.5,
+          ease: "power3",
+        });
+        let settle = 0;
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            skew(gsap.utils.clamp(-4, 4, self.getVelocity() / -350));
+            window.clearTimeout(settle);
+            settle = window.setTimeout(() => skew(0), 120);
+          },
+        });
+        cleanups.push(() => window.clearTimeout(settle));
+      }
+
+      // The page background eases into the contact band's colour as it arrives.
+      const contactBand = main.querySelector<HTMLElement>(
+        "section.band#contact",
+      );
+      if (contactBand) {
+        ScrollTrigger.create({
+          trigger: contactBand,
+          start: "top 85%",
+          end: "top 15%",
+          scrub: true,
+          onUpdate: (self) =>
+            main.style.setProperty("--shift", self.progress.toFixed(3)),
+        });
+        cleanups.push(() => main.style.removeProperty("--shift"));
+      }
 
       q<HTMLElement>("[data-count]").forEach((el) => {
         const counter = { v: 0 };
