@@ -1,69 +1,105 @@
 "use client";
 
-import { ArrowUpRight } from "@phosphor-icons/react";
-import clsx from "clsx";
-import { useLayoutEffect, useRef } from "react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 import { moreProjectsData, siteConfig } from "@/lib/data";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/gsap";
 
-// More projects as a horizontal strip: on desktop the section pins and scrolling down moves
-// the cards sideways, with a progress bar. Phones get a native swipe row with snap points,
-// and desktop with reduced motion gets a plain grid.
+// More projects as a sideways row you scroll yourself: swipe left or right on a trackpad,
+// hold Shift and use the mouse wheel, drag on touch, or use the arrow buttons. Plain vertical
+// scrolling over the row keeps scrolling the page.
 export default function MoreProjects() {
-  const pinnable = useMediaQuery(
-    "(min-width: 961px) and (prefers-reduced-motion: no-preference)",
-  );
-  const secRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLOListElement>(null);
   const progRef = useRef<HTMLElement>(null);
+  const [edges, setEdges] = useState({ start: true, end: false });
 
-  useLayoutEffect(() => {
-    const sec = secRef.current;
+  useEffect(() => {
     const track = trackRef.current;
-    if (!pinnable || !sec || !track) return;
-    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: () => -distance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top top",
-          end: () => `+=${distance()}`,
-          pin: true,
-          scrub: 0.5,
-          refreshPriority: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (progRef.current)
-              progRef.current.style.transform = `scaleX(${self.progress})`;
-          },
-        },
+    if (!track) return;
+
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      const p = max > 0 ? track.scrollLeft / max : 0;
+      if (progRef.current) progRef.current.style.transform = `scaleX(${p})`;
+      setEdges({
+        start: track.scrollLeft <= 2,
+        end: track.scrollLeft >= max - 2,
       });
-    }, sec);
-    ScrollTrigger.sort();
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
-  }, [pinnable]);
+    };
+
+    // Shift + wheel and sideways trackpad swipes scroll the row. Handling them here also
+    // stops the page's smooth scroll from turning them into vertical movement.
+    const onWheel = (e: WheelEvent) => {
+      const sideways = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      if (!e.shiftKey && !sideways) return;
+      const delta = sideways ? e.deltaX : e.deltaY;
+      e.preventDefault();
+      e.stopPropagation();
+      const notch = e.deltaMode !== 0 || Math.abs(delta) >= 50;
+      track.scrollBy({
+        left: e.deltaMode === 1 ? delta * 40 : delta,
+        behavior: notch && !prefersReducedMotion() ? "smooth" : "auto",
+      });
+    };
+
+    sync();
+    track.addEventListener("scroll", sync, { passive: true });
+    track.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("resize", sync);
+    return () => {
+      track.removeEventListener("scroll", sync);
+      track.removeEventListener("wheel", onWheel);
+      window.removeEventListener("resize", sync);
+    };
+  }, []);
+
+  const step = (dir: 1 | -1) => {
+    const track = trackRef.current;
+    const card = track?.querySelector("li");
+    if (!track || !card) return;
+    track.scrollBy({
+      left: dir * (card.getBoundingClientRect().width + 20),
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+    });
+  };
 
   return (
-    <section
-      ref={secRef}
-      className={clsx("hstrip-sec", pinnable && "pinned")}
-      aria-labelledby="more-projects"
-    >
+    <section className="hstrip-sec" aria-labelledby="more-projects">
       <div className="wrap hstrip-head">
         <h2 id="more-projects" className="display h2" data-split>
           More <span className="hl">projects</span>
         </h2>
-        {pinnable && (
-          <span className="meta" aria-hidden="true">
-            Keep scrolling, the row moves sideways
-          </span>
-        )}
+        <div className="hstrip-ctl">
+          <span className="meta">Shift + scroll, swipe, or use the arrows</span>
+          <button
+            className="sq"
+            type="button"
+            aria-label="Previous projects"
+            aria-controls="more-projects-row"
+            disabled={edges.start}
+            onClick={() => step(-1)}
+          >
+            <ArrowLeft className="ico" aria-hidden="true" />
+          </button>
+          <button
+            className="sq"
+            type="button"
+            aria-label="More projects"
+            aria-controls="more-projects-row"
+            disabled={edges.end}
+            onClick={() => step(1)}
+          >
+            <ArrowRight className="ico" aria-hidden="true" />
+          </button>
+        </div>
       </div>
-      <ol ref={trackRef} className="hstrip">
+      <ol
+        id="more-projects-row"
+        ref={trackRef}
+        className="hstrip"
+        data-start={edges.start || undefined}
+        data-end={edges.end || undefined}
+      >
         {moreProjectsData.map((p, i) => (
           <li key={p.name}>
             <a
@@ -88,13 +124,11 @@ export default function MoreProjects() {
           </li>
         ))}
       </ol>
-      {pinnable && (
-        <div className="wrap" aria-hidden="true">
-          <span className="hstrip-prog">
-            <i ref={progRef} />
-          </span>
-        </div>
-      )}
+      <div className="wrap" aria-hidden="true">
+        <span className="hstrip-prog">
+          <i ref={progRef} />
+        </span>
+      </div>
     </section>
   );
 }
