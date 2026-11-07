@@ -73,6 +73,16 @@ export type TNavItem = {
   sub: string;
 };
 
+export type THeroShot = {
+  cls: string;
+  side: "left" | "right";
+  depth: number;
+  label: string;
+  src: string;
+  h: number;
+  alt: string;
+};
+
 export type TFact = {
   count: number | null;
   pre: string;

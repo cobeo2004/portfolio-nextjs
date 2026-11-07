@@ -2,8 +2,9 @@
 
 import { ArrowDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
+import Mark from "@/components/icons/Mark";
 import { useLayoutEffect, useRef } from "react";
-import { rotatingWords, siteConfig } from "@/lib/data";
+import { heroShots, rotatingWords, siteConfig } from "@/lib/data";
 import {
   Draggable,
   gsap,
@@ -12,51 +13,20 @@ import {
   SplitText,
 } from "@/lib/gsap";
 
-const windows = [
-  {
-    cls: "w-foundry",
-    label: "software-factory",
-    src: "/img/foundry.webp",
-    w: 1280,
-    h: 800,
-    alt: "Software Factory board: coding agent runs queued, planning, building and in review, with a plan waiting for approval",
-  },
-  {
-    cls: "w-daily",
-    label: "dailyos",
-    src: "/img/dailyos.webp",
-    w: 1280,
-    h: 711,
-    alt: "DailyOS Today view: tasks, a focus goal and a day timeline",
-  },
-  {
-    cls: "w-trust",
-    label: "trustlane.house-of-imaginaries.com",
-    src: "/img/trustlane.webp",
-    w: 1280,
-    h: 740,
-    alt: "TrustLane landing page: Hours back on every claim, over the claims dashboard",
-  },
-  {
-    cls: "w-zth",
-    label: "from-zero-to-hero",
-    src: "/img/zth.webp",
-    w: 1280,
-    h: 800,
-    alt: "From Zero to Hero landing page with three app screens",
-  },
-];
-
-// Hero: the headline blurs in letter by letter, one word keeps rotating, and real product
-// shots sit on a desk you can throw around.
+// Hero: my photo in the middle with real product screenshots orbiting it at different
+// depths. They fly out from behind me on load, float, drift away from the cursor, can be
+// thrown around, and scatter outward as you scroll into the page.
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const rotRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
-    if (prefersReducedMotion() || !ref.current) return;
+    const hero = ref.current;
+    if (prefersReducedMotion() || !hero) return;
     let timer = 0;
     let drags: Draggable[] = [];
+    const cleanups: (() => void)[] = [];
+
     const ctx = gsap.context(() => {
       const split = SplitText.create("#heroTitle .line", {
         type: "words,chars",
@@ -71,7 +41,7 @@ export default function Hero() {
         stagger: 0.022,
         delay: 0.15,
       });
-      gsap.from(".now, .hero-row > *", {
+      gsap.from(".now, .hero-foot > *", {
         opacity: 0,
         y: 16,
         duration: 0.8,
@@ -110,60 +80,124 @@ export default function Hero() {
           );
       }, 2600);
 
-      // The copy drifts up and fades as you scroll away.
-      gsap.to(".hero > .wrap:first-child", {
-        y: -80,
-        opacity: 0.2,
+      // The photo rises into its frame.
+      gsap.from(".me-photo", {
+        yPercent: 18,
+        opacity: 0,
+        duration: 1.2,
+        ease: "expo.out",
+        delay: 0.35,
+      });
+      gsap.from(".me-frame", {
+        scaleY: 0,
+        transformOrigin: "50% 100%",
+        duration: 1,
+        ease: "expo.inOut",
+        delay: 0.15,
+      });
+
+      const orbits = gsap.utils.toArray<HTMLElement>(".orbit");
+      const stage = hero.querySelector<HTMLElement>(".stage");
+      if (!stage) return;
+
+      orbits.forEach((orbit, i) => {
+        const depth = Number(orbit.dataset.depth);
+        const float = orbit.querySelector(".orbit-float");
+        const card = orbit.querySelector(".orbit-card");
+
+        // Fly out from behind the photo to its place.
+        const s = stage.getBoundingClientRect();
+        const o = orbit.getBoundingClientRect();
+        gsap.from(card, {
+          x: s.left + s.width / 2 - (o.left + o.width / 2),
+          y: s.top + s.height * 0.55 - (o.top + o.height / 2),
+          scale: 0.3,
+          rotate: 0,
+          opacity: 0,
+          duration: 1.3,
+          ease: "expo.out",
+          delay: 0.7 + i * 0.08,
+        });
+
+        // Idle float, deeper cards move more.
+        gsap.to(float, {
+          y: 10 + depth * 10,
+          rotate: i % 2 ? 1.5 : -1.5,
+          duration: 3 + i * 0.45,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          delay: i * 0.3,
+        });
+
+        // Scroll away: each card scatters outward from the photo and fades.
+        const dir = orbit.dataset.side === "left" ? -1 : 1;
+        gsap.to(orbit, {
+          x: dir * (140 + depth * 160),
+          y: -(80 + depth * 120),
+          rotate: dir * 8,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+
+      gsap.to(".me", {
+        yPercent: 12,
+        scale: 0.94,
         ease: "none",
         scrollTrigger: {
-          trigger: ".hero",
+          trigger: hero,
           start: "top top",
-          end: "+=560",
+          end: "bottom top",
           scrub: true,
         },
       });
 
-      gsap.from(".win", {
-        y: 120,
-        rotate: 0,
-        opacity: 0,
-        duration: 1.1,
-        ease: "back.out(1.4)",
-        stagger: 0.12,
-        delay: 0.7,
-      });
-      gsap.from(".sticker", {
-        scale: 0,
-        rotate: -30,
-        duration: 0.6,
-        ease: "back.out(2)",
-        delay: 1.6,
-      });
-      gsap.fromTo(
-        "#desk",
-        { rotateX: 16, scale: 0.96 },
-        {
-          rotateX: 0,
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".desk-wrap",
-            start: "top 85%",
-            end: "top 25%",
-            scrub: true,
-          },
-        },
-      );
-
+      // Cards drift away from the cursor by depth (mouse only).
       if (window.matchMedia("(pointer: fine)").matches) {
+        const movers = orbits.map((orbit) => {
+          const el = orbit.querySelector(".orbit-par");
+          return {
+            depth: Number(orbit.dataset.depth),
+            x: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3" }),
+            y: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3" }),
+          };
+        });
+        const onMove = (e: PointerEvent) => {
+          const r = stage.getBoundingClientRect();
+          const nx = (e.clientX - r.left) / r.width - 0.5;
+          const ny = (e.clientY - r.top) / r.height - 0.5;
+          movers.forEach((m) => {
+            m.x(-nx * 46 * m.depth);
+            m.y(-ny * 30 * m.depth);
+          });
+        };
+        const onLeave = () =>
+          movers.forEach((m) => {
+            m.x(0);
+            m.y(0);
+          });
+        stage.addEventListener("pointermove", onMove);
+        stage.addEventListener("pointerleave", onLeave);
+        cleanups.push(() => {
+          stage.removeEventListener("pointermove", onMove);
+          stage.removeEventListener("pointerleave", onLeave);
+        });
+
         let z = 10;
-        drags = Draggable.create(".win", {
-          bounds: "#desk",
+        drags = Draggable.create(".orbit-card", {
+          bounds: stage,
           inertia: true,
           edgeResistance: 0.7,
           onPress() {
-            this.target.style.zIndex = String(++z);
-            gsap.to(this.target, { scale: 1.03, duration: 0.2 });
+            this.target.closest(".orbit").style.zIndex = String(++z);
+            gsap.to(this.target, { scale: 1.04, duration: 0.2 });
           },
           onRelease() {
             gsap.to(this.target, { scale: 1, duration: 0.3 });
@@ -185,18 +219,19 @@ export default function Hero() {
           },
         });
       }
-    }, ref);
+    }, hero);
 
     return () => {
       window.clearInterval(timer);
-      ctx.revert();
+      cleanups.forEach((fn) => fn());
       drags.forEach((d) => d.kill());
+      ctx.revert();
     };
   }, []);
 
   return (
     <section className="hero" id="top" ref={ref}>
-      <div className="wrap">
+      <div className="wrap hero-head">
         <span className="now">
           <i aria-hidden="true" />
           <b>Now:</b> {siteConfig.now}
@@ -214,47 +249,67 @@ export default function Hero() {
           </span>
           <span className="line">on solid backends.</span>
         </h1>
-        <div className="hero-row">
-          <p className="lede">
-            Simon Nguyen, forward deployed and full-stack engineer in Melbourne.
-            I ship AI into real operations, from the first workshop to on-prem.
-          </p>
-          <div className="ctas">
-            <a className="btn btn-primary magnetic" href="#work">
-              View work <ArrowDown className="ico" aria-hidden="true" />
-            </a>
-            <button className="btn btn-line" type="button" data-cmdk>
-              <Sparkle className="ico" aria-hidden="true" /> Ask my CV
-            </button>
-          </div>
-        </div>
       </div>
-      <div className="wrap desk-wrap">
-        <div className="desk" id="desk">
-          <div className="stair s1" data-par="40" />
-          <div className="stair s2" data-par="20" />
-          <div className="stair s3" data-par="60" />
-          <div className="stair s4" data-par="30" />
-          {windows.map((w) => (
-            <figure key={w.cls} className={`win m-0 ${w.cls}`}>
-              <div className="bar">
-                <span />
-                <span />
-                <span />
-                <em>{w.label}</em>
+      <div className="stage">
+        <figure className="me">
+          <span className="me-frame" aria-hidden="true" />
+          {siteConfig.portrait ? (
+            <Image
+              className="me-photo"
+              src={siteConfig.portrait.src}
+              alt={siteConfig.portrait.alt}
+              width={siteConfig.portrait.width}
+              height={siteConfig.portrait.height}
+              sizes="(max-width: 960px) 70vw, 420px"
+              priority
+            />
+          ) : (
+            <Mark className="me-photo me-mark" />
+          )}
+        </figure>
+        {heroShots.map((shot) => (
+          <figure
+            key={shot.cls}
+            className={`orbit ${shot.cls}`}
+            data-depth={shot.depth}
+            data-side={shot.side}
+          >
+            <div className="orbit-par">
+              <div className="orbit-float">
+                <div className="orbit-card win">
+                  <div className="bar">
+                    <span />
+                    <span />
+                    <span />
+                    <em>{shot.label}</em>
+                  </div>
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={1280}
+                    height={shot.h}
+                    sizes="(max-width: 960px) 40vw, 320px"
+                    draggable={false}
+                  />
+                </div>
               </div>
-              <Image
-                src={w.src}
-                alt={w.alt}
-                width={w.w}
-                height={w.h}
-                sizes="(max-width: 960px) 70vw, 520px"
-                draggable={false}
-                priority
-              />
-            </figure>
-          ))}
-          <p className="sticker">Real builds, not mockups. Drag them around.</p>
+            </div>
+          </figure>
+        ))}
+        <p className="sticker">Real builds, not mockups. Throw them around.</p>
+      </div>
+      <div className="wrap hero-foot">
+        <p className="lede">
+          Simon Nguyen, forward deployed and full-stack engineer in Melbourne. I
+          ship AI into real operations, from the first workshop to on-prem.
+        </p>
+        <div className="ctas">
+          <a className="btn btn-primary magnetic" href="#work">
+            View work <ArrowDown className="ico" aria-hidden="true" />
+          </a>
+          <button className="btn btn-line" type="button" data-cmdk>
+            <Sparkle className="ico" aria-hidden="true" /> Ask my CV
+          </button>
         </div>
       </div>
     </section>

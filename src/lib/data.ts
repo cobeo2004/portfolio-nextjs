@@ -7,6 +7,7 @@ import type {
   TCapability,
   TCaseStep,
   TFact,
+  THeroShot,
   TMusic,
   TNavItem,
   TProject,
@@ -52,6 +53,13 @@ export const siteConfig = {
   now: "Forward deployed engineer at Teqar, open to full-time roles",
   description:
     "Forward deployed and full-stack engineer in Melbourne building AI agents on solid backends.",
+  // Cut-out photo for the home hero. Until it is added, the hero shows the SN mark instead.
+  portrait: null as null | {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  },
   links: {
     github: "https://github.com/cobeo2004",
     linkedin: "https://www.linkedin.com/in/simon-nguyen-7836822b5/",
@@ -61,6 +69,65 @@ export const siteConfig = {
 };
 
 export const rotatingWords = ["agents", "RAG", "voice AI", "inference"];
+
+// Screenshots that orbit the photo in the home hero. depth: how far each moves with the
+// cursor and scroll (deeper sits further back); side: which way it scatters on scroll.
+export const heroShots: THeroShot[] = [
+  {
+    cls: "o1",
+    side: "left",
+    depth: 0.8,
+    label: "software-factory",
+    src: "/img/foundry.webp",
+    h: 800,
+    alt: "Software Factory board: coding agent runs queued, planning, building and in review",
+  },
+  {
+    cls: "o2",
+    side: "left",
+    depth: 1.2,
+    label: "dailyos",
+    src: "/img/dailyos.webp",
+    h: 711,
+    alt: "DailyOS Today view: tasks, a focus goal and a day timeline",
+  },
+  {
+    cls: "o3",
+    side: "right",
+    depth: 0.9,
+    label: "trustlane.house-of-imaginaries.com",
+    src: "/img/trustlane.webp",
+    h: 740,
+    alt: "TrustLane landing page: Hours back on every claim",
+  },
+  {
+    cls: "o4",
+    side: "right",
+    depth: 1.2,
+    label: "from-zero-to-hero",
+    src: "/img/zth.webp",
+    h: 800,
+    alt: "From Zero to Hero landing page with three app screens",
+  },
+  {
+    cls: "o5",
+    side: "left",
+    depth: 0.5,
+    label: "house-of-imaginaries.com",
+    src: "/img/hoi.webp",
+    h: 793,
+    alt: "House of Imaginaries home page",
+  },
+  {
+    cls: "o6",
+    side: "right",
+    depth: 0.6,
+    label: "lynnle.vercel.app",
+    src: "/img/lynn.webp",
+    h: 800,
+    alt: "Lynn Le portfolio home page",
+  },
+];
 
 export const navItems: TNavItem[] = [
   {
