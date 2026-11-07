@@ -3,6 +3,7 @@
 import { ArrowDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef } from "react";
+import HeroReveal from "@/components/home/HeroReveal";
 import Mark from "@/components/icons/Mark";
 import { heroRoles, siteConfig } from "@/lib/data";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
@@ -277,6 +278,7 @@ export default function Hero() {
     <section className="hero" id="top" ref={ref}>
       <Starfield />
       <span className="hero-haze" aria-hidden="true" />
+      <HeroReveal />
       <div className="wrap hero-grid">
         <div className="hero-left">
           <h1

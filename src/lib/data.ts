@@ -80,6 +80,16 @@ export const heroRoles = [
   "Full-stack engineer",
 ];
 
+// Project screenshots the watery cursor trail uncovers behind the home hero.
+export const heroRevealShots = [
+  "/img/trustlane.webp",
+  "/img/dailyos.webp",
+  "/img/foundry.webp",
+  "/img/zth.webp",
+  "/img/lynn.webp",
+  "/img/hoi.webp",
+];
+
 export const navItems: TNavItem[] = [
   {
     href: "/",
