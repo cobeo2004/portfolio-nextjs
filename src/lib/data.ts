@@ -455,6 +455,11 @@ export const projectFilters: TProjectFilter[] = [
 
 export const experienceData: TRole[] = [
   {
+    logo: {
+      src: "/img/logo-blank-theory.png",
+      alt: "Blank Theory logo",
+      fill: true,
+    },
     mono: "BT",
     title: "AI Product Engineer",
     org: "Blank Theory, Mount Waverley (part-time)",
@@ -490,6 +495,7 @@ export const experienceData: TRole[] = [
     ],
   },
   {
+    logo: { src: "/img/logo-mizco.png", alt: "Mizco logo" },
     mono: "MZ",
     title: "AI Engineer",
     org: "Mizco, Melbourne (contract, remote)",
@@ -512,6 +518,11 @@ export const experienceData: TRole[] = [
     ],
   },
   {
+    logo: {
+      src: "/img/logo-victory-minerals.png",
+      alt: "Victory Minerals logo",
+      fill: true,
+    },
     mono: "VM",
     title: "Full-Stack Engineer",
     org: "Victory Minerals, Ballarat Gold Mine (contract)",
