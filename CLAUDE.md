@@ -30,6 +30,8 @@ This is a Next.js 16 personal portfolio using the App Router with React 19, Type
 
 **Theme**: `src/lib/theme-store.ts` keeps light/dark/wizard outside React (`useSyncExternalStore`) and writes `<html data-theme>`; `themeBootScript` in `<head>` applies the saved theme before the first paint.
 
+**Cursor**: `src/components/motion/Cursor.tsx` (mouse and trackpad only, off under reduced motion). Links and buttons get the "link" state automatically; add `data-cursor="view"`, `"visit"` or `"drag"` (and optionally `data-cursor-label`) for the labelled states. Text fields keep the system caret.
+
 **Links**: use `TransitionLink` (`src/components/navigation/TransitionLink.tsx`) for internal links so the stair-column wipe plays. Buttons with a `data-cmdk` attribute open the Ask my CV palette.
 
 **Motion**: GSAP plugins are registered in `src/lib/gsap.ts`. Shared scroll motion is declarative: add `data-split`, `data-rise`, `data-row`, `data-reveal`, `data-count`, `data-par`, `data-light` or `data-stack` to markup and render `<PageMotion />` at the end of the page's `<main>`. Component-specific motion uses `gsap.context` in `useLayoutEffect` and reverts on unmount. Always respect `prefersReducedMotion()`.

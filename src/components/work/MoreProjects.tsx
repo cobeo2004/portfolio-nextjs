@@ -104,6 +104,7 @@ export default function MoreProjects() {
           <li key={p.name}>
             <a
               className="hcard"
+              data-cursor="visit"
               href={siteConfig.links.github}
               target="_blank"
               rel="noopener"

@@ -80,7 +80,7 @@ export const heroRoles = [
   "Full-stack engineer",
 ];
 
-// Project screenshots the watery cursor trail uncovers behind the home hero.
+// Project screenshots that show through the water behind the home hero, in this order.
 export const heroRevealShots = [
   "/img/trustlane.webp",
   "/img/dailyos.webp",

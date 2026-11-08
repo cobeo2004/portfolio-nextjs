@@ -2,12 +2,12 @@
 
 import { ArrowDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef } from "react";
-import HeroReveal from "@/components/home/HeroReveal";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { buildWorkStrip } from "@/components/home/workStrip";
 import Mark from "@/components/icons/Mark";
 import LiquidEther from "@/components/motion/LiquidEther";
 import { useSite } from "@/hooks/useSite";
-import { heroRoles, siteConfig } from "@/lib/data";
+import { heroRevealShots, heroRoles, siteConfig } from "@/lib/data";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import type { TTheme } from "@/types";
 
@@ -119,6 +119,13 @@ const liquidInk: Record<TTheme, string[]> = {
   wizard: ["#6b4a0f", "#f2b33d", "#ffe3a3"],
 };
 
+// How the screenshots under the water sit in each theme: [opacity, tint, tint amount].
+const shotLook: Record<TTheme, [number, string, number]> = {
+  light: [0.9, "#eef0f4", 0.1],
+  dark: [0.78, "#0a0b0f", 0.28],
+  wizard: [0.72, "#0a1110", 0.32],
+};
+
 // Builds the role as words of single letters, so each letter can drift and blur on its own.
 // Words stay unbroken so the title still wraps between words.
 function spell(el: HTMLElement, text: string) {
@@ -182,6 +189,19 @@ function vaporOut(chars: HTMLElement[], em: number) {
 // field of stars.
 export default function Hero() {
   const { theme } = useSite();
+  const [strip, setStrip] = useState<HTMLCanvasElement | null>(null);
+  const [shotOpacity, shotTint, shotTintAmount] = shotLook[theme];
+
+  // The row of project windows that shows through the water.
+  useEffect(() => {
+    let alive = true;
+    buildWorkStrip(heroRevealShots).then((canvas) => {
+      if (alive) setStrip(canvas);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
   const ref = useRef<HTMLElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
 
@@ -296,15 +316,19 @@ export default function Hero() {
         className="hero-liquid"
         colors={liquidInk[theme]}
         lightMode={theme === "light"}
-        mouseForce={18}
-        cursorSize={110}
+        mouseForce={22}
+        cursorSize={120}
         autoSpeed={0.4}
         autoIntensity={1.8}
-        clickBurst={false}
+        image={strip}
+        imageOpacity={shotOpacity}
+        imageTint={shotTint}
+        imageTintAmount={shotTintAmount}
+        imageDrift={0.006}
+        imageQuiet=".hero-left, .hero-right"
       />
       <Starfield />
       <span className="hero-haze" aria-hidden="true" />
-      <HeroReveal />
       <div className="wrap hero-grid">
         <div className="hero-left">
           <h1

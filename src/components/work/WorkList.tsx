@@ -246,6 +246,7 @@ export default function WorkList() {
                 ) : project.link.external ? (
                   <a
                     {...rowProps}
+                    data-cursor="visit"
                     href={project.link.href}
                     target="_blank"
                     rel="noopener"
@@ -253,7 +254,11 @@ export default function WorkList() {
                     {body}
                   </a>
                 ) : (
-                  <TransitionLink {...rowProps} href={project.link.href}>
+                  <TransitionLink
+                    {...rowProps}
+                    data-cursor="view"
+                    href={project.link.href}
+                  >
                     {body}
                   </TransitionLink>
                 )}

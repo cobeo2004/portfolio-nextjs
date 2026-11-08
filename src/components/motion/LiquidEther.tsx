@@ -8,7 +8,8 @@
 // WARRANTY OF ANY KIND. Full terms: https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md
 //
 // Changes for this site: styles live in globals.css, settings sync in an effect instead of
-// during render, and nothing runs under reduced motion.
+// during render, nothing runs under reduced motion, and an optional image can sit under the
+// water, showing through wherever the fluid flows (see the image props).
 
 import {
   type CSSProperties,
@@ -36,6 +37,15 @@ export type TLiquidEtherProps = {
   lightMode?: boolean;
   backgroundColor?: string;
   maxDevicePixelRatio?: number;
+  // An image (such as a canvas) under the water. It shows through where the fluid moves, bent
+  // by the flow, and repeats sideways while drifting at imageDrift (image widths per second).
+  image?: TexImageSource | null;
+  imageOpacity?: number;
+  imageTint?: string;
+  imageTintAmount?: number;
+  imageDrift?: number;
+  // CSS selector for up to four elements (such as text columns) where the image stays faint.
+  imageQuiet?: string;
   className?: string;
   style?: CSSProperties;
 };
@@ -59,6 +69,12 @@ type TSettings = {
   light: boolean;
   background: number[];
   maxRatio: number;
+  image: TexImageSource | null;
+  imageOpacity: number;
+  imageTint: number[];
+  imageTintAmount: number;
+  imageDrift: number;
+  imageQuiet: string;
 };
 
 type TProgram = {
@@ -233,6 +249,27 @@ uniform vec2 uSimSize;
 uniform float uSpeedScale;
 uniform float uLight;
 uniform vec4 uBackground;
+uniform sampler2D uImage;
+uniform float uImageOn;
+uniform float uImageOpacity;
+uniform vec3 uImageTint;
+uniform float uImageTintAmount;
+uniform float uImageScale;
+uniform float uImageShift;
+uniform vec4 uQuiet[4];
+uniform int uQuietCount;
+
+float quietAt(vec2 p) {
+  float q = 0.0;
+  for (int i = 0; i < 4; i++) {
+    if (i >= uQuietCount) break;
+    vec4 r = uQuiet[i];
+    vec2 a = smoothstep(r.xy - 0.04, r.xy + 0.01, p);
+    vec2 b = 1.0 - smoothstep(r.zw - 0.01, r.zw + 0.04, p);
+    q = max(q, a.x * a.y * b.x * b.y);
+  }
+  return q;
+}
 
 vec2 velocityAt(vec2 uv) {
   vec2 st = uv * uSimSize - 0.5;
@@ -256,7 +293,8 @@ vec2 velocityAt(vec2 uv) {
 }
 
 void main() {
-  float speed = length(velocityAt(vUv)) * uSpeedScale;
+  vec2 flow = velocityAt(vUv) * uSpeedScale;
+  float speed = length(flow);
   float level = speed < 0.75 ? speed : 0.75 + 0.25 * tanh((speed - 0.75) * 4.0);
   vec3 ink = texture(uPalette, vec2(level, 0.5)).rgb;
   float alpha = level;
@@ -267,8 +305,24 @@ void main() {
     float hot = 1.0 - exp(-max(speed - 0.75, 0.0) * 1.2);
     ink = mix(ink, min(ink * 1.8 + 0.06, vec3(1.0)), hot);
   }
-  vec3 color = ink * alpha + uBackground.rgb * uBackground.a * (1.0 - alpha);
-  float coverage = alpha + uBackground.a * (1.0 - alpha);
+  vec3 color = ink * alpha;
+  float coverage = alpha;
+  if (uImageOn > 0.5) {
+    // Where the water runs, the ink thins and the image shows through, bent by the flow.
+    float open = smoothstep(0.1, 0.5, level);
+    vec2 iuv = vec2(vUv.x * uImageScale + uImageShift, 1.0 - vUv.y) + vec2(flow.x, -flow.y) * 0.018;
+    float split = 0.0035 * open;
+    vec4 shot = texture(uImage, iuv);
+    shot.r = texture(uImage, iuv + vec2(split, 0.0)).r;
+    shot.b = texture(uImage, iuv - vec2(split, 0.0)).b;
+    vec3 tinted = mix(shot.rgb, uImageTint, uImageTintAmount) + open * (1.0 - open) * 0.16;
+    float shown = shot.a * open * uImageOpacity * (1.0 - 0.85 * quietAt(vUv));
+    float inkLeft = alpha * (1.0 - open * 0.8);
+    color = ink * inkLeft + tinted * shown * (1.0 - inkLeft);
+    coverage = inkLeft + shown * (1.0 - inkLeft);
+  }
+  color += uBackground.rgb * uBackground.a * (1.0 - coverage);
+  coverage += uBackground.a * (1.0 - coverage);
   float grain = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
   color += (grain - 0.5) / 255.0 * step(0.002, coverage);
   fragColor = vec4(clamp(color, vec3(0.0), vec3(coverage)), coverage);
@@ -397,6 +451,12 @@ const LiquidEther = ({
   lightMode = false,
   backgroundColor = "transparent",
   maxDevicePixelRatio = 2,
+  image = null,
+  imageOpacity = 0.85,
+  imageTint = "#000000",
+  imageTintAmount = 0,
+  imageDrift = 0,
+  imageQuiet = "",
   className = "",
   style,
 }: TLiquidEtherProps) => {
@@ -427,6 +487,12 @@ const LiquidEther = ({
     light: lightMode,
     background: background ? [...background, 1] : [0, 0, 0, 0],
     maxRatio: clamp(maxDevicePixelRatio, 0.5, 3),
+    image,
+    imageOpacity: clamp(imageOpacity, 0, 1),
+    imageTint: parseColor(imageTint) ?? [0, 0, 0],
+    imageTintAmount: clamp(imageTintAmount, 0, 1),
+    imageDrift,
+    imageQuiet,
   };
   const settingsRef = useRef(settings);
 
@@ -507,6 +573,59 @@ const LiquidEther = ({
     let pageVisible = document.visibilityState !== "hidden";
     let lost = false;
     let paletteKey = "";
+    let imageShown: TexImageSource | null = null;
+    let imageAspect = 1;
+    let drift = 0;
+    const quiet = new Float32Array(16);
+    let quietCount = 0;
+
+    // Measures the quiet elements in the canvas's own coordinates (0 to 1, y up).
+    const measureQuiet = () => {
+      const selector = settingsRef.current.imageQuiet;
+      quietCount = 0;
+      if (!selector) return;
+      const box = container.getBoundingClientRect();
+      if (!box.width || !box.height) return;
+      document.querySelectorAll(selector).forEach((el) => {
+        if (quietCount >= 4) return;
+        const r = el.getBoundingClientRect();
+        quiet.set(
+          [
+            (r.left - box.left) / box.width,
+            (box.bottom - r.bottom) / box.height,
+            (r.right - box.left) / box.width,
+            (box.bottom - r.top) / box.height,
+          ],
+          quietCount * 4,
+        );
+        quietCount++;
+      });
+    };
+
+    const imageTexture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, imageTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+    const updateImage = (s: TSettings) => {
+      if (s.image === imageShown) return;
+      imageShown = s.image;
+      if (!s.image) return;
+      const { width, height } = s.image as { width: number; height: number };
+      imageAspect = width / Math.max(1, height);
+      gl.bindTexture(gl.TEXTURE_2D, imageTexture);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA8,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        s.image,
+      );
+    };
 
     const paletteTexture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, paletteTexture);
@@ -703,6 +822,23 @@ const LiquidEther = ({
           (1.25 * s.intensity) / (0.84 * Math.max(size.width, size.height)),
         );
         gl.uniform1f(u.uLight, s.light ? 1 : 0);
+        bindTexture(2, imageTexture, u.uImage);
+        gl.uniform1f(u.uImageOn, imageShown ? 1 : 0);
+        gl.uniform1f(u.uImageOpacity, s.imageOpacity);
+        gl.uniform3f(
+          u.uImageTint,
+          s.imageTint[0],
+          s.imageTint[1],
+          s.imageTint[2],
+        );
+        gl.uniform1f(u.uImageTintAmount, s.imageTintAmount);
+        gl.uniform1f(
+          u.uImageScale,
+          size.width / Math.max(1, size.height) / imageAspect,
+        );
+        gl.uniform1f(u.uImageShift, drift);
+        gl.uniform4fv(u["uQuiet[0]"], quiet);
+        gl.uniform1i(u.uQuietCount, quietCount);
         gl.uniform4f(
           u.uBackground,
           s.background[0],
@@ -755,7 +891,9 @@ const LiquidEther = ({
       if (lost) return;
       const s = settingsRef.current;
       updatePalette(s);
+      updateImage(s);
       const dt = clamp((now - last) / 1000 || 0, 0, 1 / 30);
+      drift = (drift + dt * s.imageDrift) % 1;
       last = Math.max(last, now);
       const pace = Math.min(1, dt * 60);
       const idle = now - lastInput > s.autoResumeDelay && !pointer.inside;
@@ -933,8 +1071,11 @@ const LiquidEther = ({
 
     const resizeObserver = new ResizeObserver(() => {
       resize();
+      measureQuiet();
       wake();
     });
+    // Measure again once entrance animations have settled the layout.
+    const settle = window.setTimeout(measureQuiet, 2500);
     resizeObserver.observe(container);
 
     const intersection = new IntersectionObserver((entries) => {
@@ -950,10 +1091,12 @@ const LiquidEther = ({
     document.addEventListener("visibilitychange", onVisibility);
 
     resize();
+    measureQuiet();
     wake();
 
     return () => {
       cancelAnimationFrame(raf);
+      window.clearTimeout(settle);
       wakeRef.current = null;
       resizeObserver.disconnect();
       intersection.disconnect();
@@ -968,6 +1111,7 @@ const LiquidEther = ({
       if (!gl.isContextLost()) {
         dropTargets();
         gl.deleteTexture(paletteTexture);
+        gl.deleteTexture(imageTexture);
         gl.deleteVertexArray(vao);
         Object.values(programs).forEach((entry) =>
           gl.deleteProgram(entry.program),

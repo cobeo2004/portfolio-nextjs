@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 import CommandPalette from "@/components/chatbot/CommandPalette";
+import Cursor from "@/components/motion/Cursor";
 import Curtain from "@/components/footer/Curtain";
 import Footer from "@/components/footer/Footer";
 import Nav from "@/components/navigation/Nav";
@@ -125,6 +126,7 @@ export default function RootLayout({
               <Footer />
             </Curtain>
             <CommandPalette />
+            <Cursor />
           </SiteProvider>
         </QueryProvider>
         <div id="my-modal" />
