@@ -2,7 +2,6 @@ import Mark from "@/components/icons/Mark";
 import TransitionLink from "@/components/navigation/TransitionLink";
 import WizardToggle from "@/components/wizard/WizardToggle";
 import { navItems, siteConfig } from "@/lib/data";
-import BigName from "./BigName";
 
 export default function Footer() {
   return (
@@ -15,7 +14,7 @@ export default function Footer() {
               Simon Nguyen
             </TransitionLink>
             <p>
-              Forward deployed and full-stack engineer in Melbourne. Agents, RAG
+              AI product and full-stack engineer in Melbourne. Agents, RAG
               and voice systems on backends that hold up.
             </p>
           </div>
@@ -54,7 +53,9 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <BigName />
+        <div className="display big-name" aria-hidden="true">
+          Simon Nguyen
+        </div>
       </div>
     </footer>
   );

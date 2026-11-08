@@ -1,12 +1,12 @@
-import { FileText, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
+import AboutLayout from "@/components/about/AboutLayout";
 import Awards from "@/components/about/Awards";
 import Experience from "@/components/about/Experience";
 import SkillBeam from "@/components/about/SkillBeam";
 import ContactBand from "@/components/contact/ContactBand";
 import PageHead from "@/components/layout/PageHead";
 import PageMotion from "@/components/motion/PageMotion";
-import { capabilitiesData, siteConfig } from "@/lib/data";
+import { capabilitiesData } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",
@@ -23,13 +23,13 @@ export default function AboutPage() {
         hl="out"
       >
         <p className="lede max-w-[52ch]" data-rise>
-          I&apos;m Simon, a forward deployed and full-stack engineer. I studied
+          I&apos;m Simon, an AI product and full-stack engineer. I studied
           computer science at Swinburne and spend my days putting AI where it
           has to be right.
         </p>
       </PageHead>
-      <section className="pb-24">
-        <div className="wrap about">
+      <AboutLayout>
+        <section id="overview" className="about-overview">
           <div className="about-copy" data-rise>
             <p>
               The backend is where I&apos;m happiest: queues, caches, contracts
@@ -41,19 +41,6 @@ export default function AboutPage() {
               Vietnamese and English, and I&apos;ve pitched to judges at two
               national competitions.
             </p>
-            <div className="mt-2 flex flex-wrap gap-3">
-              <a
-                className="btn btn-primary"
-                href={siteConfig.links.cv}
-                target="_blank"
-                rel="noopener"
-              >
-                <FileText className="ico" aria-hidden="true" /> Read my CV
-              </a>
-              <button className="btn btn-line" type="button" data-cmdk>
-                <Sparkle className="ico" aria-hidden="true" /> Ask my CV
-              </button>
-            </div>
           </div>
           <div className="caps">
             {capabilitiesData.map((cap) => (
@@ -63,11 +50,11 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-      <Experience />
-      <Awards />
-      <SkillBeam />
+        </section>
+        <Experience />
+        <Awards />
+        <SkillBeam />
+      </AboutLayout>
       <ContactBand />
       <PageMotion />
     </main>

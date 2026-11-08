@@ -81,6 +81,27 @@ export default function SiteProvider({
     else themeStore.setChoice(theme === "light" ? "dark" : "light");
   }, [wizard, theme, setWizard]);
 
+  // Content that loads or collapses after first paint (the GitHub feed, filters, fonts) moves
+  // everything below it, so recalculate scroll positions whenever the page height changes.
+  useEffect(() => {
+    let last = document.body.scrollHeight;
+    let timer = 0;
+    const ro = new ResizeObserver(() => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        const h = document.body.scrollHeight;
+        if (Math.abs(h - last) < 2) return;
+        last = h;
+        ScrollTrigger.refresh();
+      }, 200);
+    });
+    ro.observe(document.body);
+    return () => {
+      window.clearTimeout(timer);
+      ro.disconnect();
+    };
+  }, []);
+
   // Smooth scrolling, driven by the GSAP ticker so ScrollTrigger stays in step.
   useEffect(() => {
     if (prefersReducedMotion()) return;

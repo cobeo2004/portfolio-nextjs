@@ -39,6 +39,7 @@ export default function GithubFeed() {
                 <a
                   key={r.id}
                   className="irow"
+                  data-cursor="visit"
                   href={r.html_url}
                   target="_blank"
                   rel="noopener"

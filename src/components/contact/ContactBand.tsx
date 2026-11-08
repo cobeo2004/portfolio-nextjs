@@ -18,7 +18,7 @@ export default function ContactBand({ page = false }: { page?: boolean }) {
       <div className="wrap">
         <div>
           {page ? (
-            <h1 className="display" data-split data-now>
+            <h1 className="display" data-kinetic>
               Let&apos;s ship something real.
             </h1>
           ) : (
@@ -27,8 +27,9 @@ export default function ContactBand({ page = false }: { page?: boolean }) {
             </h2>
           )}
           <p className="lede">
-            Hiring a forward deployed or full-stack engineer, or need an agent
-            working inside your operations? I reply within two working days.
+            Hiring an AI product, forward deployed or full-stack engineer, or
+            need an agent working inside your operations? I reply within two
+            working days.
           </p>
           <CopyEmail email={siteConfig.email} />
           <div className="socials">

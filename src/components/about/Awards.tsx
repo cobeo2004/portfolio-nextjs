@@ -4,7 +4,7 @@ import { awardsData } from "@/lib/data";
 
 export default function Awards() {
   return (
-    <section className="block-pad pt-0">
+    <section className="block-pad pt-0" id="awards">
       <div className="wrap">
         <h2 className="display h2" data-split>
           Wins and <span className="hl">school</span>

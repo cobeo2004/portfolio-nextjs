@@ -5,6 +5,8 @@ import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 import CommandPalette from "@/components/chatbot/CommandPalette";
+import Cursor from "@/components/motion/Cursor";
+import Curtain from "@/components/footer/Curtain";
 import Footer from "@/components/footer/Footer";
 import Nav from "@/components/navigation/Nav";
 import WizardMode from "@/components/wizard/WizardMode";
@@ -49,7 +51,7 @@ const plexMono = localFont({
   display: "swap",
 });
 
-const title = "Simon Nguyen, forward deployed and full-stack engineer";
+const title = "Simon Nguyen, AI product and full-stack engineer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -63,6 +65,8 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   keywords: [
     "Simon Nguyen",
+    "AI product engineer",
+    "AI engineer",
     "forward deployed engineer",
     "full-stack engineer",
     "AI agents",
@@ -120,8 +124,11 @@ export default function RootLayout({
             <WizardMode />
             <Nav />
             {children}
-            <Footer />
+            <Curtain>
+              <Footer />
+            </Curtain>
             <CommandPalette />
+            <Cursor />
           </SiteProvider>
         </QueryProvider>
         <div id="my-modal" />

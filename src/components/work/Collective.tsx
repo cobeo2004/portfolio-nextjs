@@ -8,7 +8,7 @@ export default function Collective() {
     <section className="pb-14">
       <div className="wrap">
         <div className="collective" data-rise>
-          <div className="shot" data-reveal>
+          <div className="shot" data-reveal data-shot>
             <Image
               src="/img/hoi.webp"
               alt="House of Imaginaries home page: We build the things we dream about"

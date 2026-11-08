@@ -167,4 +167,6 @@ export type TCaseStep = {
   rail: string;
   title: string;
   text: string;
+  // One line of the illustrative event log shown in the pipeline at this step.
+  log: { who: string; line: string; tone?: "no" | "yes" | "ai" };
 };

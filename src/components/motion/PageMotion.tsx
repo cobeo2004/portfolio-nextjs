@@ -9,15 +9,17 @@ import {
 } from "@/lib/gsap";
 
 // Scroll motion shared by every page, driven by data attributes in the markup:
-//   data-split      headline lines rise through masks (data-now plays it on load)
+//   data-kinetic    page titles assemble letter by letter on arrival
+//   data-split      section headings do a lighter version once, on scroll
 //   data-rise       blocks rise and fade in; data-row rows slide in from the left
 //   data-reveal     images wipe open from the bottom and settle
 //   data-count      numbers count up (data-pre / data-suf around the value)
 //   data-par        parallax by the given percent; data-drift sideways drift
 //   data-light      a paragraph lights up word by word while scrolling
 //   data-stack      sticky panels shrink back as the next one arrives
+//   data-shot       screenshots drift inside their frame and lean with scroll speed
 //   data-rise-band  the contact band's stair blocks
-// Every scroll-in plays in reverse when you scroll back up past it.
+// Other scroll-ins play in reverse when you scroll back up past them.
 export default function PageMotion() {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
@@ -29,37 +31,47 @@ export default function PageMotion() {
     const mm = gsap.matchMedia();
 
     const ctx = gsap.context(() => {
-      q<HTMLElement>("[data-split]").forEach((h) => {
-        const onLoad = h.hasAttribute("data-now");
+      // Page titles: letters rise out of their line and stretch to full width, like the
+      // Archivo width axis opening up. Transform only, so nothing around them moves.
+      q<HTMLElement>("[data-kinetic]").forEach((h) => {
         SplitText.create(h, {
-          type: "lines",
+          type: "lines,words,chars",
           mask: "lines",
           linesClass: "ln",
+          charsClass: "ch",
           autoSplit: true,
           onSplit: (self) =>
-            onLoad
-              ? gsap.from(self.lines, {
-                  yPercent: 105,
-                  duration: 1,
-                  ease: "expo.out",
-                  stagger: 0.09,
-                  delay: 0.25,
-                })
-              : gsap.fromTo(
-                  self.lines,
-                  { yPercent: 105 },
-                  {
-                    yPercent: 0,
-                    duration: 1,
-                    ease: "expo.out",
-                    stagger: 0.09,
-                    scrollTrigger: {
-                      trigger: h,
-                      start: "top 88%",
-                      toggleActions: "play none none reverse",
-                    },
-                  },
-                ),
+            gsap.from(self.chars, {
+              yPercent: 115,
+              scaleX: 0.3,
+              rotate: 10,
+              transformOrigin: "0% 100%",
+              duration: 1.1,
+              ease: "expo.out",
+              stagger: 0.035,
+              delay: 0.2,
+            }),
+        });
+      });
+
+      // Section headings: a lighter version of the same move, played once.
+      q<HTMLElement>("[data-split]").forEach((h) => {
+        SplitText.create(h, {
+          type: "lines,words,chars",
+          mask: "lines",
+          linesClass: "ln",
+          charsClass: "ch",
+          autoSplit: true,
+          onSplit: (self) =>
+            gsap.from(self.chars, {
+              yPercent: 105,
+              scaleX: 0.6,
+              transformOrigin: "0% 100%",
+              duration: 0.9,
+              ease: "expo.out",
+              stagger: 0.018,
+              scrollTrigger: { trigger: h, start: "top 88%", once: true },
+            }),
         });
       });
 
@@ -167,6 +179,59 @@ export default function PageMotion() {
             0.1,
           );
       });
+
+      // Screenshots drift inside their frames, and lean with the scroll speed, settling
+      // when scrolling stops. Images only; text never skews.
+      const shots = q<HTMLElement>("[data-shot]");
+      shots.forEach((el) => {
+        const img = el.querySelector("img");
+        if (!img) return;
+        gsap.fromTo(
+          img,
+          { yPercent: -6 },
+          {
+            yPercent: 6,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          },
+        );
+      });
+      if (shots.length) {
+        const skew = gsap.quickTo(shots, "skewY", {
+          duration: 0.5,
+          ease: "power3",
+        });
+        let settle = 0;
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            skew(gsap.utils.clamp(-4, 4, self.getVelocity() / -350));
+            window.clearTimeout(settle);
+            settle = window.setTimeout(() => skew(0), 120);
+          },
+        });
+        cleanups.push(() => window.clearTimeout(settle));
+      }
+
+      // The page background eases into the contact band's colour as it arrives.
+      const contactBand = main.querySelector<HTMLElement>(
+        "section.band#contact",
+      );
+      if (contactBand) {
+        ScrollTrigger.create({
+          trigger: contactBand,
+          start: "top 85%",
+          end: "top 15%",
+          scrub: true,
+          onUpdate: (self) =>
+            main.style.setProperty("--shift", self.progress.toFixed(3)),
+        });
+        cleanups.push(() => main.style.removeProperty("--shift"));
+      }
 
       q<HTMLElement>("[data-count]").forEach((el) => {
         const counter = { v: 0 };

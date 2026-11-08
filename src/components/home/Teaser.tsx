@@ -10,7 +10,7 @@ export default function Teaser() {
           How I <span className="hl">work</span>
         </h2>
         <div className="teaser">
-          <div className="shot teaser-shot" data-reveal>
+          <div className="shot teaser-shot" data-reveal data-shot>
             <Image
               src="/img/dailyos.webp"
               alt="DailyOS Today view"
