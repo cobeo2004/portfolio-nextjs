@@ -4,7 +4,7 @@
 
 # Simon Nguyen, portfolio
 
-**Forward deployed and full-stack engineer in Melbourne. I build agents on solid backends.**
+**AI product and full-stack engineer in Melbourne. I build agents on solid backends.**
 
 [![Live site](https://img.shields.io/badge/live-simon--nguyen.space-1f4bff?style=flat-square)](https://simon-nguyen.space)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org/)

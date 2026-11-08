@@ -51,7 +51,7 @@ const plexMono = localFont({
   display: "swap",
 });
 
-const title = "Simon Nguyen, forward deployed and full-stack engineer";
+const title = "Simon Nguyen, AI product and full-stack engineer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -65,6 +65,8 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   keywords: [
     "Simon Nguyen",
+    "AI product engineer",
+    "AI engineer",
     "forward deployed engineer",
     "full-stack engineer",
     "AI agents",

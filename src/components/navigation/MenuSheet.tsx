@@ -24,8 +24,8 @@ const previews: Record<string, React.ReactNode> = {
   work: <Image src="/img/trustlane.webp" alt="" width={1280} height={740} />,
   case: (
     <>
-      <b>Top 1</b>
-      <span>of 350+ teams, Agentic AI Build Week 2026</span>
+      <b>1st</b>
+      <span>Founder Mode track, Agentic AI Build Week 2026</span>
     </>
   ),
   about: (
@@ -176,7 +176,7 @@ export default function MenuSheet({ buttonRef, current }: TMenuSheetProps) {
           <div>
             <h4>Now</h4>
             <p>
-              Forward deployed engineer at Teqar. Open to full-time FDE and
+              AI Product Engineer at Blank Theory. Open to full-time AI, FDE and
               full-stack roles.
             </p>
           </div>

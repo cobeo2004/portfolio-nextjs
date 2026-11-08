@@ -14,7 +14,7 @@ export default function Footer() {
               Simon Nguyen
             </TransitionLink>
             <p>
-              Forward deployed and full-stack engineer in Melbourne. Agents, RAG
+              AI product and full-stack engineer in Melbourne. Agents, RAG
               and voice systems on backends that hold up.
             </p>
           </div>

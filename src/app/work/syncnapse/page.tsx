@@ -10,7 +10,7 @@ import CallViz from "@/components/widgets/CallViz";
 export const metadata: Metadata = {
   title: "Syncnapse case study",
   description:
-    "How Simon Nguyen built the addressing router and floor controller behind Syncnapse, Top 1 of 350+ teams.",
+    "How Simon Nguyen built the addressing router and floor controller behind Syncnapse, winner of the Founder Mode track at Agentic AI Build Week 2026.",
   alternates: { canonical: "/work/syncnapse" },
 };
 
@@ -21,7 +21,7 @@ const facts = [
     value: "We Maid AI, five engineers in Vietnam and Melbourne",
   },
   { term: "Time", value: "One week, July 2026" },
-  { term: "Result", value: "Top 1 of 350+ teams" },
+  { term: "Result", value: "1st, Founder Mode track, 300+ teams" },
 ];
 
 const myPart = [

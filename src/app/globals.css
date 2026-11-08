@@ -220,7 +220,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .hero-right .now { margin-top: 10px; }
 .now { display: inline-flex; align-items: center; gap: 10px; min-height: 36px; padding: 6px 14px 6px 12px; line-height: 1.35; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: 14px; color: var(--ink-2); }
 .now b { color: var(--ink); font-weight: 600; }
-.now i { flex: none; width: 8px; height: 8px; background: var(--cobalt); animation: pulse 2s infinite; }
+.now i { flex: none; width: 8px; height: 8px; background: var(--cobalt); }
 @keyframes pulse { 50% { opacity: .25; } }
 @media (max-width: 1080px) {
   .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(240px, 360px); }
@@ -634,7 +634,7 @@ a.wl-row:hover .wl-go .ico { transform: translate(3px, -3px); }
 .about-id b { font: 820 22px/1 var(--display); font-stretch: 118%; font-variation-settings: "wdth" 118; text-transform: uppercase; }
 .about-id span { color: var(--ink-2); font-size: 15px; }
 .about-status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono) !important; color: var(--ink) !important; margin-top: 6px; }
-.about-status i { width: 8px; height: 8px; background: #19b36b; box-shadow: 0 0 0 4px color-mix(in srgb, #19b36b 22%, transparent); animation: pulse 2s ease-in-out infinite; }
+.about-status i { width: 8px; height: 8px; background: #19b36b; box-shadow: 0 0 0 4px color-mix(in srgb, #19b36b 22%, transparent); }
 .ix { display: grid; gap: 2px; }
 .ix a { display: flex; align-items: center; gap: 14px; padding: 9px 0; text-decoration: none; color: var(--ink-3); font: 500 13px/1 var(--mono); text-transform: uppercase; letter-spacing: .04em; transition: color .3s; }
 .ix-n { min-width: 20px; }

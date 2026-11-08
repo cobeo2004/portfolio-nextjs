@@ -368,9 +368,10 @@ export default function Hero() {
           <span className="hello">Hi, I&apos;m Simon</span>
           <p className="hero-lead">I build agents on solid backends.</p>
           <p className="hero-sub">
-            Forward deployed and full-stack engineer in Melbourne. I ship AI
-            into real operations, from the first workshop to on-prem: models
-            reason, plain code checks the rules, and a person signs off.
+            AI product engineer at Blank Theory and founding engineer at Unibuz,
+            in Melbourne. I ship AI into real operations, from the first
+            workshop to on-prem: models reason, plain code checks the rules, and
+            a person signs off.
           </p>
           <span className="now">
             <i aria-hidden="true" />

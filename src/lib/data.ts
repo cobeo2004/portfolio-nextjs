@@ -46,12 +46,12 @@ export const getProjectsData: () => Promise<TProjectList[]> = async () => {
 export const siteConfig = {
   name: "Simon Nguyen",
   url: "https://simon-nguyen.space",
-  role: "Forward deployed and full-stack engineer",
+  role: "AI product and full-stack engineer",
   city: "Melbourne",
   email: "nxuantuanminh@gmail.com",
-  now: "Forward deployed engineer at Teqar, open to full-time roles",
+  now: "AI Product Engineer at Blank Theory, open to full-time roles",
   description:
-    "Forward deployed and full-stack engineer in Melbourne building AI agents on solid backends.",
+    "AI product and full-stack engineer in Melbourne building AI agents on solid backends.",
   // Cut-out photo for the home hero. Set it to null to show the SN mark instead.
   portrait: {
     src: "/img/simon.webp",
@@ -74,6 +74,7 @@ export const siteConfig = {
 
 // The role on the left of the home hero, cycled in this order.
 export const heroRoles = [
+  "AI product engineer",
   "Forward deployed engineer",
   "AI engineer",
   "Software engineer",
@@ -107,7 +108,7 @@ export const navItems: TNavItem[] = [
     href: "/work/syncnapse",
     key: "case",
     title: "Syncnapse",
-    sub: "case study: the voice agent that won",
+    sub: "case study: the Founder Mode winner",
   },
   {
     href: "/about",
@@ -125,18 +126,18 @@ export const navItems: TNavItem[] = [
 
 export const factsData: TFact[] = [
   {
-    count: 1,
-    pre: "Top ",
+    count: null,
+    pre: "",
     suf: "",
-    label: "Top 1",
-    text: "of 350+ teams at Agentic AI Build Week 2026",
+    label: "1st",
+    text: "Founder Mode track at Agentic AI Build Week 2026, out of 300+ teams",
   },
   {
-    count: 200,
+    count: 10,
     pre: "",
     suf: "+ h",
-    label: "200+ h",
-    text: "of reporting saved each cycle at Arcadian Digital",
+    label: "10+ h",
+    text: "of manual reporting saved per client at Arcadian Digital",
   },
   {
     count: 90,
@@ -163,7 +164,7 @@ export const stackPanels: TStackPanel[] = [
     desc: "An AI teammate that joins live calls, knows when it is spoken to, and turns meetings into company memory a person approves.",
     tags: ["Speech to text", "Turn detection", "Monorepo"],
     nums: [
-      { big: "Top 1", small: "of 350+ teams" },
+      { big: "1st", small: "Founder Mode track, 300+ teams" },
       { big: "3", small: "call platforms: Meet, Teams, Zoom" },
     ],
     cta: { href: "/work/syncnapse", label: "Read case study" },
@@ -187,11 +188,11 @@ export const stackPanels: TStackPanel[] = [
   },
   {
     slug: "document-ai",
-    meta: "2025-2026 / On-prem RAG / Client delivery via Teqar",
+    meta: "2025-2026 / On-prem RAG / Mizco",
     title: "Doc",
     hl: "ument",
     after: " AI",
-    desc: "A privacy-first multi-agent assistant that assembles technical documents for a WA client, with every filled field traced back to its source page.",
+    desc: "A privacy-first multi-agent assistant that reads PDFs, Word files and spreadsheets and fills in technical outcome documents, with every filled field traced back to its source.",
     tags: ["Llama 3.1", "olmOCR", "FAISS", "FastAPI"],
     nums: [
       { big: "80 h", small: "of manual assembly cut to minutes" },
@@ -203,10 +204,10 @@ export const stackPanels: TStackPanel[] = [
     meta: "2026 / Agentic platform / Arcadian Digital",
     title: "",
     hl: "Edge",
-    desc: "One data layer over 10+ marketing platforms for 20+ client accounts, used by 15 staff, with AI agents writing the client reports.",
-    tags: ["AI agents", "Integrations", "Next.js", "Playwright"],
+    desc: "An AI marketing operations platform joining 10+ platforms for 20+ client accounts, used daily by a 15-person team, with agents that research content, forecast campaigns and write the reports.",
+    tags: ["AI agents", "Python", "Integrations", "Forecasting"],
     nums: [
-      { big: "200+ h", small: "saved each reporting cycle" },
+      { big: "10+ h", small: "of manual reporting saved per client" },
       { big: "10+", small: "platforms behind one layer" },
     ],
   },
@@ -267,8 +268,8 @@ export const projectsData: TProject[] = [
     thumb: {
       kind: "tile",
       tone: "cobalt",
-      big: "Top 1",
-      small: "of 350+ teams at Agentic AI Build Week 2026",
+      big: "1st",
+      small: "Founder Mode track, Agentic AI Build Week 2026",
     },
     link: { href: "/work/syncnapse", label: "Read case study" },
   },
@@ -309,7 +310,7 @@ export const projectsData: TProject[] = [
     slug: "document-ai",
     title: "Document AI",
     meta: "2025-2026 / On-prem RAG",
-    desc: "Multi-agent document assembly for a WA client, every field traced to its source.",
+    desc: "Multi-agent document assembly for Mizco, on-prem, every field traced to its source.",
     cats: ["ai", "backend"],
     size: "third",
     thumb: {
@@ -323,14 +324,14 @@ export const projectsData: TProject[] = [
     slug: "edge",
     title: "Edge",
     meta: "2026 / Arcadian Digital",
-    desc: "One data layer over 10+ marketing platforms, with agents writing the client reports.",
+    desc: "One platform over 10+ marketing tools, with agents that research, forecast and report.",
     cats: ["ai", "backend"],
     size: "third",
     thumb: {
       kind: "tile",
       tone: "soft",
-      big: "200+ h",
-      small: "saved each reporting cycle",
+      big: "10+ h",
+      small: "of manual reporting saved per client",
     },
   },
   {
@@ -422,7 +423,7 @@ export const projectsData: TProject[] = [
       kind: "tile",
       tone: "ink",
       big: "40+",
-      small: "Edge Functions; Gemini moderation cut manual review 40%",
+      small: "Edge Functions run the platform; AI translation costs down 85%",
     },
   },
   {
@@ -454,28 +455,12 @@ export const projectFilters: TProjectFilter[] = [
 
 export const experienceData: TRole[] = [
   {
-    logo: { src: "/img/logo-arcadian-mark.png", alt: "Arcadian Digital logo" },
-    mono: "AD",
-    title: "Junior AI Developer",
-    org: "Arcadian Digital, Melbourne",
-    when: "Mar 2026 - Now",
+    mono: "BT",
+    title: "AI Product Engineer",
+    org: "Blank Theory, Mount Waverley (part-time)",
+    when: "Oct 2026 - Now",
     points: [
-      "Architected Edge, an AI marketing platform joining 10+ platforms behind one data layer for 20+ client accounts and 15 staff.",
-      "Built reporting agents that save 200+ hours each reporting cycle.",
-      "Hardened RAG chatbots until successful prompt-injection attacks dropped to near zero.",
-      "Shipped Next.js features across 8+ client sites with Playwright tests, cutting page load by up to 1.5 s.",
-    ],
-  },
-  {
-    logo: { src: "/img/logo-teqar-mark.png", alt: "Teqar logo" },
-    mono: "TQ",
-    title: "Forward Deployed Engineer",
-    org: "Teqar, Perth (contract)",
-    when: "Nov 2025 - Now",
-    points: [
-      "Embedded with a WA client's team: gathered requirements, scoped, and shipped an on-prem multi-agent document assistant.",
-      "Cut 80 hours of document assembly to minutes at 90% autofill with under 2% audited error.",
-      "Deployed and supported it on the client's own infrastructure, keeping every document inside their network.",
+      "Crafting agents into the product, from first prototype to release.",
     ],
   },
   {
@@ -485,28 +470,55 @@ export const experienceData: TRole[] = [
     org: "Unibuz, South Yarra (contract)",
     when: "Feb 2025 - Now",
     points: [
-      "Built an AI social platform across React web, Expo mobile and Supabase, with 40+ Edge Functions for auth, AI, payments and notifications.",
-      "Gemini moderation with database triggers and pgvector recommendations cut manual review by 40%.",
+      "Built the production backend of a social platform for Australian university students: 40+ Supabase Edge Functions for auth, AI, Stripe payments, anomaly detection and notifications.",
+      "Built AI moderation with Gemini 2.5 Flash across text, images and media, triggered from the database on every submission, cutting manual review and lifting production by up to 40%.",
+      "Added a wellbeing pipeline that scores posts and comments, tracks 7-day averages and alerts counsellors when community wellbeing drops.",
+      "Shipped people and tribe recommendations on pgvector embeddings blended with social-graph overlap, and an AI translation CLI that cut translation cost by up to 85%.",
+    ],
+  },
+  {
+    logo: { src: "/img/logo-arcadian-mark.png", alt: "Arcadian Digital logo" },
+    mono: "AD",
+    title: "Junior AI Developer",
+    org: "Arcadian Digital, Melbourne",
+    when: "Mar 2026 - Oct 2026",
+    points: [
+      "Built Edge from scratch to production as the primary developer: an AI marketing operations platform in Python joining 10+ platforms (Meta Ads, Google Ads, GA4, Search Console, Harvest, ClickUp), used daily by a 15-person team across 20+ client accounts.",
+      "Automated the marketing workflow with agents that research content, forecast performance and publish to LinkedIn, saving 10+ hours of manual reporting per client.",
+      "Hardened RAG chatbots against prompt injection until successful attacks dropped to near zero across client deployments.",
+      "Delivered full-stack features across 8+ client sites, including CitiPower, Deutscher and Hackett, Luna Park and Goulburn Region Tourism, with Playwright tests and Core Web Vitals tuning.",
+    ],
+  },
+  {
+    mono: "MZ",
+    title: "AI Engineer",
+    org: "Mizco, Melbourne (contract, remote)",
+    when: "Nov 2025 - Oct 2026",
+    points: [
+      "Built a privacy-first multi-agent assistant that ingests PDF, DOCX and XLSX files, chunks them for RAG and fills in technical outcome documents with grounded, auditable facts.",
+      "Cut about 80 hours of manual document assembly to minutes, at 90%+ autofill with under 2% error in audits.",
+      "Ran it on the client's own hardware: Llama 3.1, olmOCR, EmbeddingGemma, FAISS and FastAPI, with agent tools that edit tables and sections on request.",
     ],
   },
   {
     mono: "AQ",
     title: "Lead Engineer",
-    org: "Aqius Enterprises Atlantis, Glen Huntly",
+    org: "Aqius Enterprises Atlantis, Melbourne",
     when: "Feb 2025 - Nov 2025",
     points: [
-      "Led a team of six on a secure audio-logging system across Next.js, Expo, Fastify, Redis, MinIO and Whisper.",
-      "Ran planning and code review, and kept stakeholders updated on delivery.",
+      "Technical lead for a concurrent audio-logging and AI threat-detection system for vulnerable people, guiding the team through the whole lifecycle.",
+      "Designed a Bun and Fastify monorepo in Docker for on-prem deployment, with end-to-end types over tRPC to the Next.js dashboard and Expo apps.",
+      "Wrote a Go package for real-time tRPC and PostgreSQL messaging, RSA-encrypted the audio, and ran the Whisper threat-detection pipeline.",
     ],
   },
   {
-    mono: "BG",
+    mono: "VM",
     title: "Full-Stack Engineer",
-    org: "Ballarat Gold Mine, Ballarat",
-    when: "Mar 2024 - Nov 2024",
+    org: "Victory Minerals, Ballarat Gold Mine (contract)",
+    when: "Mar 2024 - Dec 2024",
     points: [
-      "Built a Next.js, tRPC and PostgreSQL information system for daily mine operations.",
-      "Digitised paper shift logs with OCR and Gemini summaries, removing about 2,000 hours a year of manual entry.",
+      "Built a management information system for daily mine operations with Next.js, tRPC and PostgreSQL.",
+      "Digitised legacy paper shift logs with OCR and added Gemini summaries that surface the day's operational trends.",
     ],
   },
 ];
@@ -521,6 +533,11 @@ export const moreProjectsData: TSideProject[] = [
     year: "2026",
     name: "Trend Analysis RAG",
     desc: "RAG over 27K+ search trends in 84 countries, mixing vector search with structured filters.",
+  },
+  {
+    year: "2026",
+    name: "Edge Runtime",
+    desc: "A Supabase-style edge-function runtime that spawns sandboxed Deno workers from Node, Bun or Deno, published on npm.",
   },
   {
     year: "2026",
@@ -543,9 +560,14 @@ export const moreProjectsData: TSideProject[] = [
     desc: "Solution architecture for a sovereign Vietnamese healthcare LLM. Top 2 of 48+ teams.",
   },
   {
-    year: "2025",
+    year: "2026",
     name: "SolarCycleAI",
-    desc: "Built in 8 hours at WattTheHack: panel end-of-life forecasts and a truck route optimiser. Top 10.",
+    desc: "Built in 8 hours at Watt The Hack: forecasts which solar assets fail next and plans the cheapest route to recover them. Top 10.",
+  },
+  {
+    year: "2025",
+    name: "Botanic Nail Bar",
+    desc: "Booking, rostering and staff management for a Cheltenham salon, built with Next.js and Convex.",
   },
   {
     year: "2025",
@@ -556,9 +578,9 @@ export const moreProjectsData: TSideProject[] = [
 
 export const awardsData: TAward[] = [
   {
-    big: "Top 1",
-    title: "Agentic AI Build Week 2026",
-    text: "Of 350+ teams, with Syncnapse. Pitched to the judges and led full-stack and AI development.",
+    big: "1st",
+    title: "Agentic AI Build Week 2026, Founder Mode track",
+    text: "Southeast Asia's largest AI hackathon, with 3,000+ builders and 300+ teams. Won with Syncnapse; pitched to the judges and led full-stack and AI development.",
     link: "/work/syncnapse",
   },
   {
@@ -568,13 +590,18 @@ export const awardsData: TAward[] = [
   },
   {
     big: "Top 10",
-    title: "WattTheHack 2025",
-    text: "Of 32+ teams, with SolarCycleAI. Built and pitched in 8 hours.",
+    title: "Watt The Hack 2026",
+    text: "Of 32 teams, with SolarCycleAI, at MLAI and Monash DeepNeuron's hackathon. Built and pitched in 8 hours.",
+  },
+  {
+    big: "4",
+    title: "Anthropic Academy certificates",
+    text: "Claude Code in Action, Claude with the Anthropic API, Model Context Protocol, and agent skills, 2026.",
   },
   {
     big: "BCS",
     title: "Swinburne University of Technology",
-    text: "Bachelor of Computer Science, 2023-2025.",
+    text: "Bachelor of Computer Science, Feb 2023 - Oct 2025.",
   },
 ];
 
@@ -623,7 +650,7 @@ export const suggestedQuestions: TSuggestedQuestion[] = [
   {
     question: "What did you build at Arcadian Digital?",
     fallback:
-      "Edge: an AI marketing platform used by 15 staff across 20+ client accounts. It joins 10+ platforms (Meta Ads, Google Ads, GA4, Search Console, Klaviyo and more) behind one data layer, and its reporting agents save 200+ hours each reporting cycle.",
+      "Edge: an AI marketing operations platform I built from scratch to production as the primary developer. It joins 10+ platforms (Meta Ads, Google Ads, GA4, Search Console, Harvest, ClickUp), is used daily by a 15-person team across 20+ client accounts, and its agents save 10+ hours of manual reporting per client.",
   },
   {
     question: "What is your strongest backend work?",
@@ -638,7 +665,7 @@ export const suggestedQuestions: TSuggestedQuestion[] = [
   {
     question: "Are you available?",
     fallback:
-      "Yes. I am open to full-time forward deployed and full-stack roles, and to contract work. Email me from the contact page.",
+      "Yes. I'm an AI Product Engineer at Blank Theory (part-time) and a founding engineer at Unibuz, and I'm open to full-time AI, forward deployed and full-stack roles, and to contract work. Email me from the contact page.",
   },
 ];
 

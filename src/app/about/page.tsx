@@ -23,7 +23,7 @@ export default function AboutPage() {
         hl="out"
       >
         <p className="lede max-w-[52ch]" data-rise>
-          I&apos;m Simon, a forward deployed and full-stack engineer. I studied
+          I&apos;m Simon, an AI product and full-stack engineer. I studied
           computer science at Swinburne and spend my days putting AI where it
           has to be right.
         </p>
